@@ -1,0 +1,37 @@
+images {
+  image: "/assets/sprites/ui/white.png"
+}
+images {
+  image: "/assets/sprites/ui/circle.png"
+}
+images {
+  image: "/assets/sprites/ui/card_back.png"
+}
+images {
+  image: "/assets/sprites/icons/team.png"
+}
+images {
+  image: "/assets/sprites/icons/product.png"
+}
+images {
+  image: "/assets/sprites/icons/money.png"
+}
+images {
+  image: "/assets/sprites/icons/board.png"
+}
+images {
+  image: "/assets/sprites/characters/lead_artem.png"
+}
+images {
+  image: "/assets/sprites/characters/hr_kristina.png"
+}
+images {
+  image: "/assets/sprites/characters/sales_igor.png"
+}
+images {
+  image: "/assets/sprites/characters/investor_mark.png"
+}
+images {
+  image: "/assets/sprites/characters/zavhoz_mikhalych.png"
+}
+extrude_borders: 2

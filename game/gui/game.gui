@@ -1,0 +1,1442 @@
+script: "/game/gui/game.gui_script"
+fonts {
+  name: "game_font"
+  font: "/assets/fonts/game_font.font"
+}
+fonts {
+  name: "game_title_font"
+  font: "/assets/fonts/game_title_font.font"
+}
+textures {
+  name: "game"
+  texture: "/assets/atlas/game.atlas"
+}
+nodes {
+  position {
+    x: 240.0
+    y: 427.0
+    z: 0.0
+  }
+  size {
+    x: 480.0
+    y: 854.0
+  }
+  color {
+    x: 0.080
+    y: 0.100
+    z: 0.140
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 350.0
+    z: 0.0
+  }
+  size {
+    x: 480.0
+    y: 154.0
+  }
+  color {
+    x: 0.120
+    y: 0.150
+    z: 0.200
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "header_bg"
+  parent: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 50.0
+    z: 0.0
+  }
+  size {
+    x: 440.0
+    y: 34.0
+  }
+  color {
+    x: 0.950
+    y: 0.850
+    z: 0.400
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Квартал 1"
+  font: "game_title_font"
+  id: "quarter_label"
+  parent: "header_bg"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -165.0
+    y: -16.0
+    z: 0.0
+  }
+  size {
+    x: 90.0
+    y: 80.0
+  }
+  color {
+    x: 0.160
+    y: 0.200
+    z: 0.260
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_team"
+  parent: "header_bg"
+  alpha: 1.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 12.0
+    z: 0.0
+  }
+  size {
+    x: 48.0
+    y: 48.0
+  }
+  color {
+    x: 0.180
+    y: 0.220
+    z: 0.300
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_team_icon_bg"
+  parent: "stat_team"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 36.0
+    y: 36.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/team"
+  id: "stat_team_icon"
+  parent: "stat_team_icon_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 40.0
+    z: 0.0
+  }
+  size {
+    x: 12.0
+    y: 12.0
+  }
+  color {
+    x: 0.980
+    y: 0.850
+    z: 0.200
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_team_dot"
+  parent: "stat_team"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -20.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 10.0
+  }
+  color {
+    x: 0.100
+    y: 0.120
+    z: 0.160
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_team_bar_bg"
+  parent: "stat_team"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 37.0
+    y: 8.0
+  }
+  color {
+    x: 0.300
+    y: 0.750
+    z: 0.950
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_team_bar_fill"
+  parent: "stat_team_bar_bg"
+  pivot: PIVOT_W
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -34.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 16.0
+  }
+  color {
+    x: 0.850
+    y: 0.900
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "50"
+  font: "game_font"
+  id: "stat_team_val"
+  parent: "stat_team"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -55.0
+    y: -16.0
+    z: 0.0
+  }
+  size {
+    x: 90.0
+    y: 80.0
+  }
+  color {
+    x: 0.160
+    y: 0.200
+    z: 0.260
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_product"
+  parent: "header_bg"
+  alpha: 1.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 12.0
+    z: 0.0
+  }
+  size {
+    x: 48.0
+    y: 48.0
+  }
+  color {
+    x: 0.180
+    y: 0.220
+    z: 0.300
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_product_icon_bg"
+  parent: "stat_product"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 36.0
+    y: 36.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/product"
+  id: "stat_product_icon"
+  parent: "stat_product_icon_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 40.0
+    z: 0.0
+  }
+  size {
+    x: 12.0
+    y: 12.0
+  }
+  color {
+    x: 0.980
+    y: 0.850
+    z: 0.200
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_product_dot"
+  parent: "stat_product"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -20.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 10.0
+  }
+  color {
+    x: 0.100
+    y: 0.120
+    z: 0.160
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_product_bar_bg"
+  parent: "stat_product"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 37.0
+    y: 8.0
+  }
+  color {
+    x: 0.300
+    y: 0.750
+    z: 0.950
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_product_bar_fill"
+  parent: "stat_product_bar_bg"
+  pivot: PIVOT_W
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -34.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 16.0
+  }
+  color {
+    x: 0.850
+    y: 0.900
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "50"
+  font: "game_font"
+  id: "stat_product_val"
+  parent: "stat_product"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 55.0
+    y: -16.0
+    z: 0.0
+  }
+  size {
+    x: 90.0
+    y: 80.0
+  }
+  color {
+    x: 0.160
+    y: 0.200
+    z: 0.260
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_money"
+  parent: "header_bg"
+  alpha: 1.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 12.0
+    z: 0.0
+  }
+  size {
+    x: 48.0
+    y: 48.0
+  }
+  color {
+    x: 0.180
+    y: 0.220
+    z: 0.300
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_money_icon_bg"
+  parent: "stat_money"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 36.0
+    y: 36.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/money"
+  id: "stat_money_icon"
+  parent: "stat_money_icon_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 40.0
+    z: 0.0
+  }
+  size {
+    x: 12.0
+    y: 12.0
+  }
+  color {
+    x: 0.980
+    y: 0.850
+    z: 0.200
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_money_dot"
+  parent: "stat_money"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -20.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 10.0
+  }
+  color {
+    x: 0.100
+    y: 0.120
+    z: 0.160
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_money_bar_bg"
+  parent: "stat_money"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 37.0
+    y: 8.0
+  }
+  color {
+    x: 0.300
+    y: 0.750
+    z: 0.950
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_money_bar_fill"
+  parent: "stat_money_bar_bg"
+  pivot: PIVOT_W
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -34.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 16.0
+  }
+  color {
+    x: 0.850
+    y: 0.900
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "50"
+  font: "game_font"
+  id: "stat_money_val"
+  parent: "stat_money"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 165.0
+    y: -16.0
+    z: 0.0
+  }
+  size {
+    x: 90.0
+    y: 80.0
+  }
+  color {
+    x: 0.160
+    y: 0.200
+    z: 0.260
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_board"
+  parent: "header_bg"
+  alpha: 1.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 12.0
+    z: 0.0
+  }
+  size {
+    x: 48.0
+    y: 48.0
+  }
+  color {
+    x: 0.180
+    y: 0.220
+    z: 0.300
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_board_icon_bg"
+  parent: "stat_board"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 36.0
+    y: 36.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/board"
+  id: "stat_board_icon"
+  parent: "stat_board_icon_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 40.0
+    z: 0.0
+  }
+  size {
+    x: 12.0
+    y: 12.0
+  }
+  color {
+    x: 0.980
+    y: 0.850
+    z: 0.200
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "stat_board_dot"
+  parent: "stat_board"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -20.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 10.0
+  }
+  color {
+    x: 0.100
+    y: 0.120
+    z: 0.160
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_board_bar_bg"
+  parent: "stat_board"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 37.0
+    y: 8.0
+  }
+  color {
+    x: 0.300
+    y: 0.750
+    z: 0.950
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "stat_board_bar_fill"
+  parent: "stat_board_bar_bg"
+  pivot: PIVOT_W
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -34.0
+    z: 0.0
+  }
+  size {
+    x: 74.0
+    y: 16.0
+  }
+  color {
+    x: 0.850
+    y: 0.900
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "50"
+  font: "game_font"
+  id: "stat_board_val"
+  parent: "stat_board"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 30.0
+    z: 0.0
+  }
+  size {
+    x: 380.0
+    y: 460.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  id: "card_container"
+  parent: "root"
+  alpha: 1.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -8.0
+    z: 0.0
+  }
+  size {
+    x: 374.0
+    y: 454.0
+  }
+  color {
+    x: 0.030
+    y: 0.040
+    z: 0.060
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "card_shadow"
+  parent: "card_container"
+  alpha: 0.65
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 370.0
+    y: 450.0
+  }
+  color {
+    x: 0.960
+    y: 0.970
+    z: 0.980
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "card"
+  parent: "card_container"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 95.0
+    z: 0.0
+  }
+  size {
+    x: 240.0
+    y: 240.0
+  }
+  color {
+    x: 0.880
+    y: 0.900
+    z: 0.940
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/circle"
+  id: "card_portrait_frame"
+  parent: "card"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 228.0
+    y: 228.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/lead_artem"
+  id: "card_portrait"
+  parent: "card_portrait_frame"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -42.0
+    z: 0.0
+  }
+  size {
+    x: 340.0
+    y: 26.0
+  }
+  color {
+    x: 0.120
+    y: 0.160
+    z: 0.220
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Тимлид Артем"
+  font: "game_title_font"
+  id: "card_char_name"
+  parent: "card"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -68.0
+    z: 0.0
+  }
+  size {
+    x: 340.0
+    y: 20.0
+  }
+  color {
+    x: 0.450
+    y: 0.500
+    z: 0.600
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Главный разработчик"
+  font: "game_font"
+  id: "card_char_role"
+  parent: "card"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -136.0
+    z: 0.0
+  }
+  size {
+    x: 340.0
+    y: 96.0
+  }
+  color {
+    x: 0.920
+    y: 0.940
+    z: 0.970
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "card_text_bg"
+  parent: "card"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 320.0
+    y: 88.0
+  }
+  color {
+    x: 0.100
+    y: 0.120
+    z: 0.180
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Добро пожаловать в стартап!"
+  font: "game_font"
+  id: "card_text"
+  parent: "card_text_bg"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -80.0
+    y: 130.0
+    z: 0.0
+  }
+  size {
+    x: 190.0
+    y: 56.0
+  }
+  color {
+    x: 0.850
+    y: 0.250
+    z: 0.250
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "choice_overlay_left"
+  parent: "card"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 180.0
+    y: 50.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "НЕТ"
+  font: "game_font"
+  id: "choice_text_left"
+  parent: "choice_overlay_left"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 80.0
+    y: 130.0
+    z: 0.0
+  }
+  size {
+    x: 190.0
+    y: 56.0
+  }
+  color {
+    x: 0.200
+    y: 0.700
+    z: 0.350
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "choice_overlay_right"
+  parent: "card"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 180.0
+    y: 50.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "ДА"
+  font: "game_font"
+  id: "choice_text_right"
+  parent: "choice_overlay_right"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -105.0
+    y: -250.0
+    z: 0.0
+  }
+  size {
+    x: 190.0
+    y: 64.0
+  }
+  color {
+    x: 0.220
+    y: 0.260
+    z: 0.340
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "btn_left"
+  parent: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -70.0
+    y: 14.0
+    z: 0.0
+  }
+  size {
+    x: 40.0
+    y: 20.0
+  }
+  color {
+    x: 0.950
+    y: 0.850
+    z: 0.350
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "[A]"
+  font: "game_font"
+  id: "btn_left_hint"
+  parent: "btn_left"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 15.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 140.0
+    y: 56.0
+  }
+  color {
+    x: 0.950
+    y: 0.950
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Вариант влево"
+  font: "game_font"
+  id: "btn_left_label"
+  parent: "btn_left"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 105.0
+    y: -250.0
+    z: 0.0
+  }
+  size {
+    x: 190.0
+    y: 64.0
+  }
+  color {
+    x: 0.220
+    y: 0.260
+    z: 0.340
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "btn_right"
+  parent: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 70.0
+    y: 14.0
+    z: 0.0
+  }
+  size {
+    x: 40.0
+    y: 20.0
+  }
+  color {
+    x: 0.950
+    y: 0.850
+    z: 0.350
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "[D]"
+  font: "game_font"
+  id: "btn_right_hint"
+  parent: "btn_right"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -15.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 140.0
+    y: 56.0
+  }
+  color {
+    x: 0.950
+    y: 0.950
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Вариант вправо"
+  font: "game_font"
+  id: "btn_right_label"
+  parent: "btn_right"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -340.0
+    z: 0.0
+  }
+  size {
+    x: 440.0
+    y: 40.0
+  }
+  color {
+    x: 0.550
+    y: 0.600
+    z: 0.700
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Свайпайте влево/вправо или жмите A / D"
+  font: "game_font"
+  id: "footer_hint"
+  parent: "root"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 480.0
+    y: 854.0
+  }
+  color {
+    x: 0.030
+    y: 0.040
+    z: 0.070
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "game_over_panel"
+  parent: "root"
+  alpha: 0.00
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 20.0
+    z: 0.0
+  }
+  size {
+    x: 420.0
+    y: 540.0
+  }
+  color {
+    x: 0.130
+    y: 0.160
+    z: 0.220
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "game_over_box"
+  parent: "game_over_panel"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 215.0
+    z: 0.0
+  }
+  size {
+    x: 380.0
+    y: 40.0
+  }
+  color {
+    x: 0.950
+    y: 0.300
+    z: 0.300
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "ВЫ УВОЛЕНЫ!"
+  font: "game_title_font"
+  id: "go_header"
+  parent: "game_over_box"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 160.0
+    z: 0.0
+  }
+  size {
+    x: 380.0
+    y: 36.0
+  }
+  color {
+    x: 0.950
+    y: 0.850
+    z: 0.400
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Бунт на корабле"
+  font: "game_title_font"
+  id: "go_reason_title"
+  parent: "game_over_box"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 65.0
+    z: 0.0
+  }
+  size {
+    x: 380.0
+    y: 120.0
+  }
+  color {
+    x: 0.180
+    y: 0.220
+    z: 0.300
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/white"
+  id: "go_desc_bg"
+  parent: "game_over_box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 360.0
+    y: 100.0
+  }
+  color {
+    x: 0.900
+    y: 0.920
+    z: 0.960
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Все сеньоры уволились одним днем."
+  font: "game_font"
+  id: "go_desc"
+  parent: "go_desc_bg"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -30.0
+    z: 0.0
+  }
+  size {
+    x: 380.0
+    y: 30.0
+  }
+  color {
+    x: 0.700
+    y: 0.850
+    z: 0.950
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Вы продержались: 12 Кварталов"
+  font: "game_font"
+  id: "go_score"
+  parent: "game_over_box"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -110.0
+    z: 0.0
+  }
+  size {
+    x: 340.0
+    y: 64.0
+  }
+  color {
+    x: 0.180
+    y: 0.650
+    z: 0.380
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "btn_revive"
+  parent: "game_over_box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 320.0
+    y: 56.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Остаться в кресле (+35%)\n(Смотреть рекламу)"
+  font: "game_font"
+  id: "btn_revive_text"
+  parent: "btn_revive"
+  pivot: PIVOT_CENTER
+  line_break: true
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -190.0
+    z: 0.0
+  }
+  size {
+    x: 340.0
+    y: 56.0
+  }
+  color {
+    x: 0.300
+    y: 0.350
+    z: 0.450
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "game/card_back"
+  id: "btn_restart"
+  parent: "game_over_box"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  size {
+    x: 320.0
+    y: 40.0
+  }
+  color {
+    x: 1.000
+    y: 1.000
+    z: 1.000
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Новый стартап (Заново)"
+  font: "game_font"
+  id: "btn_restart_text"
+  parent: "btn_restart"
+  pivot: PIVOT_CENTER
+  inherit_alpha: true
+}

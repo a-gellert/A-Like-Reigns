@@ -1,0 +1,353 @@
+local deck_engine = require("game.scripts.deck_engine")
+local ads_bridge = require("game.scripts.ads_bridge")
+
+local HASH_TOUCH = hash("touch")
+local HASH_LEFT = hash("left")
+local HASH_RIGHT = hash("right")
+local HASH_KEY_A = hash("key_a")
+local HASH_KEY_D = hash("key_d")
+local HASH_KEY_SPACE = hash("key_space")
+
+local DRAG_THRESHOLD = 100 -- Threshold in px as specified in GDD
+local MAX_ROTATION_DEG = 15.0 -- 15 degrees max angle
+local SCREEN_WIDTH = 480 -- Screen reference width
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	ads_bridge.init()
+
+	self.engine = deck_engine.new()
+	self.is_dragging = false
+	self.touch_start_x = 0
+	self.touch_start_y = 0
+	self.card_offset_x = 0
+	self.card_offset_y = 0
+	self.card_base_pos = vmath.vector3(0, 30, 0)
+	self.is_animating = false
+
+	-- Cache GUI nodes
+	self.nodes = {
+		root = gui.get_node("root"),
+		quarter_label = gui.get_node("quarter_label"),
+		card_container = gui.get_node("card_container"),
+		card = gui.get_node("card"),
+		card_shadow = gui.get_node("card_shadow"),
+		card_portrait = gui.get_node("card_portrait"),
+		card_char_name = gui.get_node("card_char_name"),
+		card_char_role = gui.get_node("card_char_role"),
+		card_text = gui.get_node("card_text"),
+
+		choice_overlay_left = gui.get_node("choice_overlay_left"),
+		choice_text_left = gui.get_node("choice_text_left"),
+		choice_overlay_right = gui.get_node("choice_overlay_right"),
+		choice_text_right = gui.get_node("choice_text_right"),
+
+		btn_left = gui.get_node("btn_left"),
+		btn_left_label = gui.get_node("btn_left_label"),
+		btn_right = gui.get_node("btn_right"),
+		btn_right_label = gui.get_node("btn_right_label"),
+
+		game_over_panel = gui.get_node("game_over_panel"),
+		go_header = gui.get_node("go_header"),
+		go_reason_title = gui.get_node("go_reason_title"),
+		go_desc = gui.get_node("go_desc"),
+		go_score = gui.get_node("go_score"),
+		btn_revive = gui.get_node("btn_revive"),
+		btn_restart = gui.get_node("btn_restart"),
+
+		stats = {
+			team = {
+				val = gui.get_node("stat_team_val"),
+				fill = gui.get_node("stat_team_bar_fill"),
+				dot = gui.get_node("stat_team_dot")
+			},
+			product = {
+				val = gui.get_node("stat_product_val"),
+				fill = gui.get_node("stat_product_bar_fill"),
+				dot = gui.get_node("stat_product_dot")
+			},
+			money = {
+				val = gui.get_node("stat_money_val"),
+				fill = gui.get_node("stat_money_bar_fill"),
+				dot = gui.get_node("stat_money_dot")
+			},
+			board = {
+				val = gui.get_node("stat_board_val"),
+				fill = gui.get_node("stat_board_bar_fill"),
+				dot = gui.get_node("stat_board_dot")
+			}
+		}
+	}
+
+	gui.set_enabled(self.nodes.game_over_panel, false)
+
+	-- Start game
+	self.engine:reset()
+	update_ui_state(self)
+end
+
+function update_ui_state(self)
+	local card = self.engine.current_card
+	if not card then
+		return
+	end
+
+	-- 1. Quarters
+	gui.set_text(self.nodes.quarter_label, "Квартал " .. tostring(self.engine.quarters + 1))
+
+	-- 2. Stats & Progress bars
+	for stat_name, node_group in pairs(self.nodes.stats) do
+		local val = math.max(0, math.min(100, self.engine.stats[stat_name] or 50))
+		gui.set_text(node_group.val, tostring(val))
+		-- bar width is 74 px max
+		local fill_width = math.max(2, math.floor(74 * (val / 100)))
+		gui.set_size(node_group.fill, vmath.vector3(fill_width, 8, 0))
+
+		-- Color warnings if near death
+		if val <= 20 or val >= 80 then
+			gui.set_color(node_group.fill, vmath.vector4(0.95, 0.35, 0.35, 1.0))
+		else
+			gui.set_color(node_group.fill, vmath.vector4(0.30, 0.75, 0.95, 1.0))
+		end
+	end
+
+	-- 3. Character Info & Portrait
+	local char_info = self.engine:get_character_info(card.character)
+	gui.set_text(self.nodes.card_char_name, char_info.name)
+	gui.set_text(self.nodes.card_char_role, char_info.role)
+	gui.play_flipbook(self.nodes.card_portrait, char_info.sprite)
+
+	-- 4. Dialogue Text
+	gui.set_text(self.nodes.card_text, card.text)
+
+	-- 5. Choices Previews
+	gui.set_text(self.nodes.choice_text_left, card.left_choice.text)
+	gui.set_text(self.nodes.choice_text_right, card.right_choice.text)
+
+	-- 6. Buttons Labels
+	gui.set_text(self.nodes.btn_left_label, card.left_choice.text)
+	gui.set_text(self.nodes.btn_right_label, card.right_choice.text)
+
+	-- Reset Card Transform
+	gui.set_position(self.nodes.card_container, self.card_base_pos)
+	gui.set_rotation(self.nodes.card_container, vmath.vector3(0, 0, 0))
+	gui.set_color(self.nodes.choice_overlay_left, vmath.vector4(0.85, 0.25, 0.25, 0.0))
+	gui.set_color(self.nodes.choice_overlay_right, vmath.vector4(0.20, 0.70, 0.35, 0.0))
+
+	hide_telegraph_dots(self)
+end
+
+function hide_telegraph_dots(self)
+	for _, node_group in pairs(self.nodes.stats) do
+		gui.set_color(node_group.dot, vmath.vector4(0.98, 0.85, 0.20, 0.0))
+	end
+end
+
+function update_telegraphing(self, dx)
+	local card = self.engine.current_card
+	if not card or math.abs(dx) < 15 then
+		hide_telegraph_dots(self)
+		return
+	end
+
+	local choice = (dx < 0) and card.left_choice or card.right_choice
+	if not choice or not choice.effects then
+		hide_telegraph_dots(self)
+		return
+	end
+
+	for stat_name, delta in pairs(choice.effects) do
+		local node_group = self.nodes.stats[stat_name]
+		if node_group and delta ~= 0 then
+			local abs_delta = math.abs(delta)
+			-- Small dot for 1..10, Large dot for > 10
+			local dot_size = (abs_delta > 10) and 18 or 10
+			gui.set_size(node_group.dot, vmath.vector3(dot_size, dot_size, 0))
+			-- Alpha ramps up with swipe progress
+			local alpha = math.min(1.0, math.abs(dx) / 80.0)
+			gui.set_color(node_group.dot, vmath.vector4(0.98, 0.85, 0.20, alpha))
+		elseif node_group then
+			gui.set_color(node_group.dot, vmath.vector4(0.98, 0.85, 0.20, 0.0))
+		end
+	end
+end
+
+function show_game_over(self)
+	ads_bridge.gameplay_stop()
+	gui.set_enabled(self.nodes.game_over_panel, true)
+	gui.set_color(self.nodes.game_over_panel, vmath.vector4(0.03, 0.04, 0.07, 0.0))
+	gui.animate(self.nodes.game_over_panel, gui.PROP_COLOR, vmath.vector4(0.03, 0.04, 0.07, 0.95), gui.EASING_OUTQUAD, 0.35)
+
+	local death = self.engine.death_info
+	if death then
+		gui.set_text(self.nodes.go_reason_title, death.title)
+		gui.set_text(self.nodes.go_desc, death.desc)
+	else
+		gui.set_text(self.nodes.go_reason_title, "Увольнение")
+		gui.set_text(self.nodes.go_desc, "Совет директоров нашел вам замену.")
+	end
+
+	gui.set_text(self.nodes.go_score, "Вы продержались: " .. tostring(self.engine.quarters) .. " Кварталов")
+
+	-- If rewarded ad was already used in this run, disable revive button
+	if self.engine.ad_rewarded_used then
+		gui.set_enabled(self.nodes.btn_revive, false)
+	else
+		gui.set_enabled(self.nodes.btn_revive, true)
+	end
+end
+
+function commit_choice(self, direction)
+	if self.is_animating or self.engine.is_game_over then
+		return
+	end
+
+	self.is_animating = true
+	hide_telegraph_dots(self)
+
+	-- Fly out animation
+	local target_x = (direction == "left") and -520 or 520
+	local target_rot = (direction == "left") and 25 or -25
+	local target_pos = vmath.vector3(target_x, self.card_base_pos.y, 0)
+
+	gui.animate(self.nodes.card_container, gui.PROP_POSITION, target_pos, gui.EASING_INQUAD, 0.22, 0, function()
+		local game_ended = self.engine:apply_choice(direction)
+		if self.engine.is_game_over then
+			self.is_animating = false
+			show_game_over(self)
+		else
+			-- Spawn next card from top/fade-in
+			gui.set_position(self.nodes.card_container, vmath.vector3(0, 180, 0))
+			gui.set_rotation(self.nodes.card_container, vmath.vector3(0, 0, 0))
+			gui.set_scale(self.nodes.card_container, vmath.vector3(0.85, 0.85, 1))
+			update_ui_state(self)
+
+			gui.animate(self.nodes.card_container, gui.PROP_POSITION, self.card_base_pos, gui.EASING_OUTBACK, 0.28)
+			gui.animate(self.nodes.card_container, gui.PROP_SCALE, vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.28, 0, function()
+				self.is_animating = false
+			end)
+		end
+	end)
+end
+
+function return_card_to_center(self)
+	self.is_animating = true
+	hide_telegraph_dots(self)
+	gui.animate(self.nodes.choice_overlay_left, gui.PROP_COLOR, vmath.vector4(0.85, 0.25, 0.25, 0.0), gui.EASING_OUTQUAD, 0.18)
+	gui.animate(self.nodes.choice_overlay_right, gui.PROP_COLOR, vmath.vector4(0.20, 0.70, 0.35, 0.0), gui.EASING_OUTQUAD, 0.18)
+	gui.animate(self.nodes.card_container, gui.PROP_ROTATION, vmath.vector3(0, 0, 0), gui.EASING_OUTQUAD, 0.22)
+	gui.animate(self.nodes.card_container, gui.PROP_POSITION, self.card_base_pos, gui.EASING_OUTQUAD, 0.22, 0, function()
+		self.is_animating = false
+	end)
+end
+
+function on_input(self, action_id, action)
+	-- 1. Game Over screen interactions
+	if self.engine.is_game_over then
+		if action_id == HASH_TOUCH and action.pressed then
+			if gui.pick_node(self.nodes.btn_revive, action.x, action.y) and (not self.engine.ad_rewarded_used) then
+				ads_bridge.rewarded_break(function(success)
+					if success then
+						self.engine:apply_rewarded_revive()
+						gui.set_enabled(self.nodes.game_over_panel, false)
+						ads_bridge.gameplay_start()
+						update_ui_state(self)
+					end
+				end)
+				return true
+			elseif gui.pick_node(self.nodes.btn_restart, action.x, action.y) then
+				-- Check interstitial ad on restart (e.g. every 2-3 runs as per GDD)
+				if (self.engine.total_runs % 2) == 0 then
+					ads_bridge.commercial_break(function()
+						self.engine:reset()
+						gui.set_enabled(self.nodes.game_over_panel, false)
+						ads_bridge.gameplay_start()
+						update_ui_state(self)
+					end)
+				else
+					self.engine:reset()
+					gui.set_enabled(self.nodes.game_over_panel, false)
+					ads_bridge.gameplay_start()
+					update_ui_state(self)
+				end
+				return true
+			end
+		end
+		return false
+	end
+
+	-- 2. Desktop Keyboard & Buttons
+	if not self.is_animating then
+		if action.pressed then
+			if action_id == HASH_LEFT or action_id == HASH_KEY_A then
+				commit_choice(self, "left")
+				return true
+			elseif action_id == HASH_RIGHT or action_id == HASH_KEY_D then
+				commit_choice(self, "right")
+				return true
+			end
+		end
+	end
+
+	-- 3. Mouse / Touch click on Desktop Action Buttons below card
+	if action_id == HASH_TOUCH and action.pressed and not self.is_animating then
+		if gui.pick_node(self.nodes.btn_left, action.x, action.y) then
+			commit_choice(self, "left")
+			return true
+		elseif gui.pick_node(self.nodes.btn_right, action.x, action.y) then
+			commit_choice(self, "right")
+			return true
+		end
+	end
+
+	-- 4. Card Drag / Swipe Physics (Formula from GDD)
+	if action_id == HASH_TOUCH and not self.is_animating then
+		if action.pressed then
+			if gui.pick_node(self.nodes.card, action.x, action.y) then
+				self.is_dragging = true
+				self.touch_start_x = action.x
+				self.touch_start_y = action.y
+				return true
+			end
+		elseif self.is_dragging then
+			local dx = action.x - self.touch_start_x
+			local dy = action.y - self.touch_start_y
+
+			if action.released then
+				self.is_dragging = false
+				if math.abs(dx) >= DRAG_THRESHOLD then
+					local dir = (dx < 0) and "left" or "right"
+					commit_choice(self, dir)
+				else
+					return_card_to_center(self)
+				end
+				return true
+			else
+				-- GDD Formula: rotation = (dx / W_screen) * 15 deg
+				local rot_z = -(dx / SCREEN_WIDTH) * MAX_ROTATION_DEG
+				local pos_x = self.card_base_pos.x + dx
+				local pos_y = self.card_base_pos.y + dy * 0.25 -- subtle vertical follow
+
+				gui.set_position(self.nodes.card_container, vmath.vector3(pos_x, pos_y, 0))
+				gui.set_rotation(self.nodes.card_container, vmath.vector3(0, 0, rot_z))
+
+				-- Update choice badge alpha
+				if dx < 0 then
+					local left_alpha = math.min(1.0, math.abs(dx) / 100.0)
+					gui.set_color(self.nodes.choice_overlay_left, vmath.vector4(0.85, 0.25, 0.25, left_alpha))
+					gui.set_color(self.nodes.choice_overlay_right, vmath.vector4(0.20, 0.70, 0.35, 0.0))
+				else
+					local right_alpha = math.min(1.0, math.abs(dx) / 100.0)
+					gui.set_color(self.nodes.choice_overlay_right, vmath.vector4(0.20, 0.70, 0.35, right_alpha))
+					gui.set_color(self.nodes.choice_overlay_left, vmath.vector4(0.85, 0.25, 0.25, 0.0))
+				end
+
+				-- Telegraphing dots update
+				update_telegraphing(self, dx)
+				return true
+			end
+		end
+	end
+
+	return false
+end
