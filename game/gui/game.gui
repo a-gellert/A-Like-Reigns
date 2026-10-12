@@ -15,131 +15,123 @@ nodes {
   position {
     x: 240.0
     y: 427.0
-    z: 0.0
   }
   size {
     x: 480.0
     y: 854.0
   }
-  color {
-    x: 0.080
-    y: 0.100
-    z: 0.140
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/office_bg"
   id: "root"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 350.0
-    z: 0.0
+    y: 348.0
   }
   size {
-    x: 480.0
-    y: 154.0
-  }
-  color {
-    x: 0.120
-    y: 0.150
-    z: 0.200
+    x: 456.0
+    y: 150.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/header_panel"
   id: "header_bg"
   parent: "root"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 50.0
-    z: 0.0
+    x: -30.0
+    y: 46.0
   }
   size {
-    x: 440.0
+    x: 330.0
     y: 34.0
   }
   color {
-    x: 0.950
-    y: 0.850
-    z: 0.400
+    x: 0.98
+    y: 0.88
+    z: 0.42
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Квартал 1"
+  text: "\320\232\320\262\320\260\321\200\321\202\320\260\320\273 1"
   font: "game_title_font"
   id: "quarter_label"
   parent: "header_bg"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: -165.0
-    y: -16.0
-    z: 0.0
+    x: 175.0
+    y: 46.0
   }
   size {
-    x: 90.0
-    y: 80.0
-  }
-  color {
-    x: 0.160
-    y: 0.200
-    z: 0.260
+    x: 64.0
+    y: 32.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/btn_pill"
+  id: "btn_lang"
+  parent: "header_bg"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 60.0
+    y: 28.0
+  }
+  color {
+    x: 0.95
+    y: 0.96
+    z: 0.98
+  }
+  type: TYPE_TEXT
+  text: "RU"
+  font: "game_font"
+  id: "btn_lang_label"
+  parent: "btn_lang"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -162.0
+    y: -20.0
+  }
+  size {
+    x: 92.0
+    y: 84.0
+  }
+  type: TYPE_BOX
+  texture: "game/stat_box"
   id: "stat_team"
   parent: "header_bg"
-  alpha: 1.00
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 12.0
-    z: 0.0
+    y: 14.0
   }
   size {
-    x: 48.0
-    y: 48.0
+    x: 44.0
+    y: 44.0
   }
   color {
-    x: 0.180
-    y: 0.220
-    z: 0.300
+    x: 0.14
+    y: 0.18
+    z: 0.26
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/circle"
   id: "stat_team_icon_bg"
   parent: "stat_team"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
-    x: 36.0
-    y: 36.0
-  }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+    x: 34.0
+    y: 34.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/team"
   id: "stat_team_icon"
   parent: "stat_team_icon_bg"
@@ -147,44 +139,18 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: 40.0
-    z: 0.0
-  }
-  size {
-    x: 12.0
-    y: 12.0
-  }
-  color {
-    x: 0.980
-    y: 0.850
-    z: 0.200
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/circle"
-  id: "stat_team_dot"
-  parent: "stat_team"
-  alpha: 0.00
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -20.0
-    z: 0.0
+    y: -16.0
   }
   size {
     x: 74.0
-    y: 10.0
+    y: 8.0
   }
   color {
-    x: 0.100
-    y: 0.120
-    z: 0.160
+    x: 0.1
+    y: 0.13
+    z: 0.18
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_team_bar_bg"
   parent: "stat_team"
@@ -193,112 +159,102 @@ nodes {
 nodes {
   position {
     x: -37.0
-    y: 0.0
-    z: 0.0
+  }
+  size {
+    y: 8.0
+  }
+  color {
+    x: 0.95
+    y: 0.3
+    z: 0.3
+  }
+  type: TYPE_BOX
+  texture: "game/white"
+  id: "stat_team_bar_preview"
+  pivot: PIVOT_W
+  parent: "stat_team_bar_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
   }
   size {
     x: 37.0
     y: 8.0
   }
   color {
-    x: 0.300
-    y: 0.750
-    z: 0.950
+    x: 0.28
+    y: 0.78
+    z: 0.95
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_team_bar_fill"
-  parent: "stat_team_bar_bg"
   pivot: PIVOT_W
+  parent: "stat_team_bar_bg"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: -34.0
-    z: 0.0
+    y: -30.0
   }
   size {
     x: 74.0
     y: 16.0
   }
   color {
-    x: 0.850
-    y: 0.900
-    z: 0.950
+    x: 0.92
+    y: 0.95
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "50"
   font: "game_font"
   id: "stat_team_val"
   parent: "stat_team"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: -55.0
-    y: -16.0
-    z: 0.0
+    x: -54.0
+    y: -20.0
   }
   size {
-    x: 90.0
-    y: 80.0
-  }
-  color {
-    x: 0.160
-    y: 0.200
-    z: 0.260
+    x: 92.0
+    y: 84.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/stat_box"
   id: "stat_product"
   parent: "header_bg"
-  alpha: 1.00
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 12.0
-    z: 0.0
+    y: 14.0
   }
   size {
-    x: 48.0
-    y: 48.0
+    x: 44.0
+    y: 44.0
   }
   color {
-    x: 0.180
-    y: 0.220
-    z: 0.300
+    x: 0.14
+    y: 0.18
+    z: 0.26
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/circle"
   id: "stat_product_icon_bg"
   parent: "stat_product"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
-    x: 36.0
-    y: 36.0
-  }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+    x: 34.0
+    y: 34.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/product"
   id: "stat_product_icon"
   parent: "stat_product_icon_bg"
@@ -306,44 +262,18 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: 40.0
-    z: 0.0
-  }
-  size {
-    x: 12.0
-    y: 12.0
-  }
-  color {
-    x: 0.980
-    y: 0.850
-    z: 0.200
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/circle"
-  id: "stat_product_dot"
-  parent: "stat_product"
-  alpha: 0.00
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -20.0
-    z: 0.0
+    y: -16.0
   }
   size {
     x: 74.0
-    y: 10.0
+    y: 8.0
   }
   color {
-    x: 0.100
-    y: 0.120
-    z: 0.160
+    x: 0.1
+    y: 0.13
+    z: 0.18
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_product_bar_bg"
   parent: "stat_product"
@@ -352,112 +282,102 @@ nodes {
 nodes {
   position {
     x: -37.0
-    y: 0.0
-    z: 0.0
+  }
+  size {
+    y: 8.0
+  }
+  color {
+    x: 0.95
+    y: 0.3
+    z: 0.3
+  }
+  type: TYPE_BOX
+  texture: "game/white"
+  id: "stat_product_bar_preview"
+  pivot: PIVOT_W
+  parent: "stat_product_bar_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
   }
   size {
     x: 37.0
     y: 8.0
   }
   color {
-    x: 0.300
-    y: 0.750
-    z: 0.950
+    x: 0.28
+    y: 0.78
+    z: 0.95
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_product_bar_fill"
-  parent: "stat_product_bar_bg"
   pivot: PIVOT_W
+  parent: "stat_product_bar_bg"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: -34.0
-    z: 0.0
+    y: -30.0
   }
   size {
     x: 74.0
     y: 16.0
   }
   color {
-    x: 0.850
-    y: 0.900
-    z: 0.950
+    x: 0.92
+    y: 0.95
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "50"
   font: "game_font"
   id: "stat_product_val"
   parent: "stat_product"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 55.0
-    y: -16.0
-    z: 0.0
+    x: 54.0
+    y: -20.0
   }
   size {
-    x: 90.0
-    y: 80.0
-  }
-  color {
-    x: 0.160
-    y: 0.200
-    z: 0.260
+    x: 92.0
+    y: 84.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/stat_box"
   id: "stat_money"
   parent: "header_bg"
-  alpha: 1.00
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 12.0
-    z: 0.0
+    y: 14.0
   }
   size {
-    x: 48.0
-    y: 48.0
+    x: 44.0
+    y: 44.0
   }
   color {
-    x: 0.180
-    y: 0.220
-    z: 0.300
+    x: 0.14
+    y: 0.18
+    z: 0.26
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/circle"
   id: "stat_money_icon_bg"
   parent: "stat_money"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
-    x: 36.0
-    y: 36.0
-  }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+    x: 34.0
+    y: 34.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/money"
   id: "stat_money_icon"
   parent: "stat_money_icon_bg"
@@ -465,44 +385,18 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: 40.0
-    z: 0.0
-  }
-  size {
-    x: 12.0
-    y: 12.0
-  }
-  color {
-    x: 0.980
-    y: 0.850
-    z: 0.200
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/circle"
-  id: "stat_money_dot"
-  parent: "stat_money"
-  alpha: 0.00
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -20.0
-    z: 0.0
+    y: -16.0
   }
   size {
     x: 74.0
-    y: 10.0
+    y: 8.0
   }
   color {
-    x: 0.100
-    y: 0.120
-    z: 0.160
+    x: 0.1
+    y: 0.13
+    z: 0.18
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_money_bar_bg"
   parent: "stat_money"
@@ -511,112 +405,102 @@ nodes {
 nodes {
   position {
     x: -37.0
-    y: 0.0
-    z: 0.0
+  }
+  size {
+    y: 8.0
+  }
+  color {
+    x: 0.95
+    y: 0.3
+    z: 0.3
+  }
+  type: TYPE_BOX
+  texture: "game/white"
+  id: "stat_money_bar_preview"
+  pivot: PIVOT_W
+  parent: "stat_money_bar_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
   }
   size {
     x: 37.0
     y: 8.0
   }
   color {
-    x: 0.300
-    y: 0.750
-    z: 0.950
+    x: 0.28
+    y: 0.78
+    z: 0.95
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_money_bar_fill"
-  parent: "stat_money_bar_bg"
   pivot: PIVOT_W
+  parent: "stat_money_bar_bg"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: -34.0
-    z: 0.0
+    y: -30.0
   }
   size {
     x: 74.0
     y: 16.0
   }
   color {
-    x: 0.850
-    y: 0.900
-    z: 0.950
+    x: 0.92
+    y: 0.95
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "50"
   font: "game_font"
   id: "stat_money_val"
   parent: "stat_money"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 165.0
-    y: -16.0
-    z: 0.0
+    x: 162.0
+    y: -20.0
   }
   size {
-    x: 90.0
-    y: 80.0
-  }
-  color {
-    x: 0.160
-    y: 0.200
-    z: 0.260
+    x: 92.0
+    y: 84.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/stat_box"
   id: "stat_board"
   parent: "header_bg"
-  alpha: 1.00
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 12.0
-    z: 0.0
+    y: 14.0
   }
   size {
-    x: 48.0
-    y: 48.0
+    x: 44.0
+    y: 44.0
   }
   color {
-    x: 0.180
-    y: 0.220
-    z: 0.300
+    x: 0.14
+    y: 0.18
+    z: 0.26
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/circle"
   id: "stat_board_icon_bg"
   parent: "stat_board"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
-    x: 36.0
-    y: 36.0
-  }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+    x: 34.0
+    y: 34.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/board"
   id: "stat_board_icon"
   parent: "stat_board_icon_bg"
@@ -624,44 +508,18 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: 40.0
-    z: 0.0
-  }
-  size {
-    x: 12.0
-    y: 12.0
-  }
-  color {
-    x: 0.980
-    y: 0.850
-    z: 0.200
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/circle"
-  id: "stat_board_dot"
-  parent: "stat_board"
-  alpha: 0.00
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -20.0
-    z: 0.0
+    y: -16.0
   }
   size {
     x: 74.0
-    y: 10.0
+    y: 8.0
   }
   color {
-    x: 0.100
-    y: 0.120
-    z: 0.160
+    x: 0.1
+    y: 0.13
+    z: 0.18
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_board_bar_bg"
   parent: "stat_board"
@@ -670,156 +528,130 @@ nodes {
 nodes {
   position {
     x: -37.0
-    y: 0.0
-    z: 0.0
+  }
+  size {
+    y: 8.0
+  }
+  color {
+    x: 0.95
+    y: 0.3
+    z: 0.3
+  }
+  type: TYPE_BOX
+  texture: "game/white"
+  id: "stat_board_bar_preview"
+  pivot: PIVOT_W
+  parent: "stat_board_bar_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -37.0
   }
   size {
     x: 37.0
     y: 8.0
   }
   color {
-    x: 0.300
-    y: 0.750
-    z: 0.950
+    x: 0.28
+    y: 0.78
+    z: 0.95
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "stat_board_bar_fill"
-  parent: "stat_board_bar_bg"
   pivot: PIVOT_W
+  parent: "stat_board_bar_bg"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: -34.0
-    z: 0.0
+    y: -30.0
   }
   size {
     x: 74.0
     y: 16.0
   }
   color {
-    x: 0.850
-    y: 0.900
-    z: 0.950
+    x: 0.92
+    y: 0.95
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "50"
   font: "game_font"
   id: "stat_board_val"
   parent: "stat_board"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: 30.0
-    z: 0.0
   }
   size {
     x: 380.0
     y: 460.0
   }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   id: "card_container"
   parent: "root"
-  alpha: 1.00
   inherit_alpha: true
+  alpha: 0.0
 }
 nodes {
   position {
-    x: 0.0
-    y: -8.0
-    z: 0.0
+    y: -12.0
   }
   size {
-    x: 374.0
-    y: 454.0
+    x: 388.0
+    y: 468.0
   }
   color {
-    x: 0.030
-    y: 0.040
-    z: 0.060
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/card_back"
-  id: "card_shadow"
-  parent: "card_container"
-  alpha: 0.65
-  inherit_alpha: true
-}
-nodes {
-  position {
     x: 0.0
     y: 0.0
     z: 0.0
   }
+  type: TYPE_BOX
+  texture: "game/shadow"
+  id: "card_shadow"
+  parent: "card_container"
+  alpha: 0.75
+}
+nodes {
   size {
-    x: 370.0
-    y: 450.0
-  }
-  color {
-    x: 0.960
-    y: 0.970
-    z: 0.980
+    x: 374.0
+    y: 454.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/card_back"
   id: "card"
   parent: "card_container"
-  inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: 95.0
-    z: 0.0
+    y: 75.0
   }
   size {
-    x: 240.0
-    y: 240.0
+    x: 236.0
+    y: 236.0
   }
   color {
-    x: 0.880
-    y: 0.900
-    z: 0.940
+    x: 0.86
+    y: 0.9
+    z: 0.96
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/circle"
   id: "card_portrait_frame"
   parent: "card"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
     x: 228.0
     y: 228.0
   }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/lead_artem"
   id: "card_portrait"
   parent: "card_portrait_frame"
@@ -827,402 +659,311 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: -42.0
-    z: 0.0
+    y: 200.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
   }
   size {
     x: 340.0
     y: 26.0
   }
   color {
-    x: 0.120
-    y: 0.160
-    z: 0.220
+    x: 0.12
+    y: 0.16
+    z: 0.24
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Тимлид Артем"
+  text: "\320\242\320\270\320\274\320\273\320\270\320\264 \320\220\321\200\321\202\320\265\320\274"
   font: "game_title_font"
   id: "card_char_name"
   parent: "card"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
-    y: -68.0
-    z: 0.0
+    y: -125.0
   }
   size {
-    x: 340.0
-    y: 20.0
-  }
-  color {
-    x: 0.450
-    y: 0.500
-    z: 0.600
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Главный разработчик"
-  font: "game_font"
-  id: "card_char_role"
-  parent: "card"
-  pivot: PIVOT_CENTER
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -136.0
-    z: 0.0
-  }
-  size {
-    x: 340.0
-    y: 96.0
-  }
-  color {
-    x: 0.920
-    y: 0.940
-    z: 0.970
+    x: 344.0
+    y: 115.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/dialog_box"
   id: "card_text_bg"
   parent: "card"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
     x: 320.0
-    y: 88.0
+    y: 105.0
   }
   color {
-    x: 0.100
-    y: 0.120
-    z: 0.180
+    x: 0.12
+    y: 0.16
+    z: 0.22
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Добро пожаловать в стартап!"
+  text: "\320\224\320\276\320\261\321\200\320\276 \320\277\320\276\320\266\320\260\320\273\320\276\320\262\320\260\321\202\321\214 \320\262 \321\201\321\202\320\260\321\200\321\202\320\260\320\277!"
   font: "game_font"
   id: "card_text"
-  parent: "card_text_bg"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "card_text_bg"
   inherit_alpha: true
 }
 nodes {
   position {
     x: -80.0
     y: 130.0
-    z: 0.0
-  }
-  size {
-    x: 190.0
-    y: 56.0
-  }
-  color {
-    x: 0.850
-    y: 0.250
-    z: 0.250
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
-  id: "choice_overlay_left"
-  parent: "card"
-  alpha: 0.00
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
   }
   size {
     x: 180.0
-    y: 50.0
+    y: 64.0
   }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+  type: TYPE_BOX
+  texture: "game/badge_no"
+  id: "choice_overlay_left"
+  parent: "card"
+  inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
+  alpha: 0.0
+}
+nodes {
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 168.0
+    y: 46.0
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "НЕТ"
+  text: "\320\235\320\225\320\242"
   font: "game_font"
   id: "choice_text_left"
-  parent: "choice_overlay_left"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "choice_overlay_left"
   inherit_alpha: true
 }
 nodes {
   position {
     x: 80.0
     y: 130.0
-    z: 0.0
-  }
-  size {
-    x: 190.0
-    y: 56.0
-  }
-  color {
-    x: 0.200
-    y: 0.700
-    z: 0.350
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
-  id: "choice_overlay_right"
-  parent: "card"
-  alpha: 0.00
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
   }
   size {
     x: 180.0
-    y: 50.0
+    y: 64.0
   }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+  type: TYPE_BOX
+  texture: "game/badge_yes"
+  id: "choice_overlay_right"
+  parent: "card"
+  inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
+  alpha: 0.0
+}
+nodes {
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 168.0
+    y: 46.0
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "ДА"
+  text: "\320\224\320\220"
   font: "game_font"
   id: "choice_text_right"
-  parent: "choice_overlay_right"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "choice_overlay_right"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: -105.0
+    x: -108.0
     y: -250.0
-    z: 0.0
   }
   size {
-    x: 190.0
+    x: 196.0
     y: 64.0
   }
-  color {
-    x: 0.220
-    y: 0.260
-    z: 0.340
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/card_back"
+  texture: "game/btn_pill"
   id: "btn_left"
   parent: "root"
   inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
 }
 nodes {
   position {
-    x: -70.0
+    x: -72.0
     y: 14.0
-    z: 0.0
   }
   size {
-    x: 40.0
+    x: 36.0
     y: 20.0
   }
   color {
-    x: 0.950
-    y: 0.850
-    z: 0.350
+    x: 0.98
+    y: 0.88
+    z: 0.42
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "[A]"
   font: "game_font"
   id: "btn_left_hint"
   parent: "btn_left"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 15.0
-    y: 0.0
-    z: 0.0
+    x: 14.0
   }
   size {
-    x: 140.0
+    x: 146.0
     y: 56.0
   }
   color {
-    x: 0.950
-    y: 0.950
-    z: 0.950
+    x: 0.95
+    y: 0.96
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Вариант влево"
+  text: "\320\222\320\260\321\200\320\270\320\260\320\275\321\202 \320\262\320\273\320\265\320\262\320\276"
   font: "game_font"
   id: "btn_left_label"
-  parent: "btn_left"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "btn_left"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 105.0
+    x: 108.0
     y: -250.0
-    z: 0.0
   }
   size {
-    x: 190.0
+    x: 196.0
     y: 64.0
   }
-  color {
-    x: 0.220
-    y: 0.260
-    z: 0.340
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/card_back"
+  texture: "game/btn_pill"
   id: "btn_right"
   parent: "root"
   inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
 }
 nodes {
   position {
-    x: 70.0
+    x: 72.0
     y: 14.0
-    z: 0.0
   }
   size {
-    x: 40.0
+    x: 36.0
     y: 20.0
   }
   color {
-    x: 0.950
-    y: 0.850
-    z: 0.350
+    x: 0.98
+    y: 0.88
+    z: 0.42
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "[D]"
   font: "game_font"
   id: "btn_right_hint"
   parent: "btn_right"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: -15.0
-    y: 0.0
-    z: 0.0
+    x: -14.0
   }
   size {
-    x: 140.0
+    x: 146.0
     y: 56.0
   }
   color {
-    x: 0.950
-    y: 0.950
-    z: 0.950
+    x: 0.95
+    y: 0.96
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Вариант вправо"
+  text: "\320\222\320\260\321\200\320\270\320\260\320\275\321\202 \320\262\320\277\321\200\320\260\320\262\320\276"
   font: "game_font"
   id: "btn_right_label"
-  parent: "btn_right"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "btn_right"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: -340.0
-    z: 0.0
   }
   size {
     x: 440.0
     y: 40.0
   }
   color {
-    x: 0.550
-    y: 0.600
-    z: 0.700
+    x: 0.65
+    y: 0.72
+    z: 0.82
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Свайпайте влево/вправо или жмите A / D"
+  text: "\320\241\320\262\320\260\320\271\320\277\320\260\320\271\321\202\320\265 \320\262\320\273\320\265\320\262\320\276/\320\262\320\277\321\200\320\260\320\262\320\276 \320\270\320\273\320\270 \320\266\320\274\320\270\321\202\320\265 A / D"
   font: "game_font"
   id: "footer_hint"
-  parent: "root"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "root"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
     x: 480.0
     y: 854.0
   }
   color {
-    x: 0.030
-    y: 0.040
-    z: 0.070
+    x: 0.04
+    y: 0.06
+    z: 0.09
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/white"
   id: "game_over_panel"
   parent: "root"
-  alpha: 0.00
   inherit_alpha: true
+  alpha: 0.0
 }
 nodes {
   position {
-    x: 0.0
     y: 20.0
-    z: 0.0
   }
   size {
-    x: 420.0
+    x: 430.0
     y: 540.0
   }
-  color {
-    x: 0.130
-    y: 0.160
-    z: 0.220
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "game/card_back"
   id: "game_over_box"
   parent: "game_over_panel"
@@ -1230,213 +971,153 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
     y: 215.0
-    z: 0.0
   }
   size {
     x: 380.0
     y: 40.0
   }
   color {
-    x: 0.950
-    y: 0.300
-    z: 0.300
+    x: 0.92
+    y: 0.28
+    z: 0.28
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "ВЫ УВОЛЕНЫ!"
+  text: "\320\222\320\253 \320\243\320\222\320\236\320\233\320\225\320\235\320\253!"
   font: "game_title_font"
   id: "go_header"
   parent: "game_over_box"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: 160.0
-    z: 0.0
   }
   size {
     x: 380.0
     y: 36.0
   }
   color {
-    x: 0.950
-    y: 0.850
-    z: 0.400
+    x: 0.95
+    y: 0.85
+    z: 0.35
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Бунт на корабле"
+  text: "\320\221\321\203\320\275\321\202 \320\275\320\260 \320\272\320\276\321\200\320\260\320\261\320\273\320\265"
   font: "game_title_font"
   id: "go_reason_title"
   parent: "game_over_box"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: 65.0
-    z: 0.0
   }
   size {
     x: 380.0
     y: 120.0
   }
-  color {
-    x: 0.180
-    y: 0.220
-    z: 0.300
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/white"
+  texture: "game/dialog_box"
   id: "go_desc_bg"
   parent: "game_over_box"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
-    x: 360.0
+    x: 350.0
     y: 100.0
   }
   color {
-    x: 0.900
-    y: 0.920
-    z: 0.960
+    x: 0.18
+    y: 0.22
+    z: 0.3
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Все сеньоры уволились одним днем."
+  text: "\320\222\321\201\320\265 \321\201\320\265\320\275\321\214\320\276\321\200\321\213 \321\203\320\262\320\276\320\273\320\270\320\273\320\270\321\201\321\214 \320\276\320\264\320\275\320\270\320\274 \320\264\320\275\320\265\320\274."
   font: "game_font"
   id: "go_desc"
-  parent: "go_desc_bg"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "go_desc_bg"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: -30.0
-    z: 0.0
   }
   size {
     x: 380.0
     y: 30.0
   }
   color {
-    x: 0.700
-    y: 0.850
-    z: 0.950
+    x: 0.25
+    y: 0.45
+    z: 0.75
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Вы продержались: 12 Кварталов"
+  text: "\320\222\321\213 \320\277\321\200\320\276\320\264\320\265\321\200\320\266\320\260\320\273\320\270\321\201\321\214: 12 \320\232\320\262\320\260\321\200\321\202\320\260\320\273\320\276\320\262"
   font: "game_font"
   id: "go_score"
   parent: "game_over_box"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: -110.0
-    z: 0.0
   }
   size {
     x: 340.0
     y: 64.0
   }
-  color {
-    x: 0.180
-    y: 0.650
-    z: 0.380
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/card_back"
+  texture: "game/btn_success"
   id: "btn_revive"
   parent: "game_over_box"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
     x: 320.0
     y: 56.0
   }
-  color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
-  }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Остаться в кресле (+35%)\n(Смотреть рекламу)"
+  text: "\320\236\321\201\321\202\320\260\321\202\321\214\321\201\321\217 \320\262 \320\272\321\200\320\265\321\201\320\273\320\265 (+35%)\n"
+  "(\320\241\320\274\320\276\321\202\321\200\320\265\321\202\321\214 \321\200\320\265\320\272\320\273\320\260\320\274\321\203)"
   font: "game_font"
   id: "btn_revive_text"
-  parent: "btn_revive"
-  pivot: PIVOT_CENTER
   line_break: true
+  parent: "btn_revive"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 0.0
     y: -190.0
-    z: 0.0
   }
   size {
     x: 340.0
     y: 56.0
   }
-  color {
-    x: 0.300
-    y: 0.350
-    z: 0.450
-  }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "game/card_back"
+  texture: "game/btn_pill"
   id: "btn_restart"
   parent: "game_over_box"
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
   size {
     x: 320.0
     y: 40.0
   }
   color {
-    x: 1.000
-    y: 1.000
-    z: 1.000
+    x: 0.95
+    y: 0.96
+    z: 0.98
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Новый стартап (Заново)"
+  text: "\320\235\320\276\320\262\321\213\320\271 \321\201\321\202\320\260\321\200\321\202\320\260\320\277 (\320\227\320\260\320\275\320\276\320\262\320\276)"
   font: "game_font"
   id: "btn_restart_text"
   parent: "btn_restart"
-  pivot: PIVOT_CENTER
   inherit_alpha: true
 }
+material: "/builtins/materials/gui.material"

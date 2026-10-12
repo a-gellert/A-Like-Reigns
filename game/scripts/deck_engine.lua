@@ -1,9 +1,10 @@
 local cards_data = require("game.data.cards_data")
+local i18n = require("game.data.i18n")
 
 local M = {}
 
 M.START_STATS = { team = 50, product = 50, money = 50, board = 50 }
-M.COOLDOWN_TURNS = 8
+M.COOLDOWN_TURNS = 12
 
 function M.new()
 	local instance = {
@@ -151,13 +152,12 @@ function M:apply_choice(direction)
 	local death_stat, death_type = self:check_death()
 	if death_stat then
 		self.is_game_over = true
-		local stat_death = cards_data.deaths[death_stat]
-		local info = stat_death and stat_death[death_type]
+		local death_info = i18n.get_death(death_stat, death_type)
 		self.death_info = {
 			stat = death_stat,
 			type = death_type,
-			title = info and info.title or "Конец карьеры",
-			desc = info and info.desc or "Совет директоров освободил вас от должности.",
+			title = death_info.title,
+			desc = death_info.desc,
 			quarters = self.quarters
 		}
 		return true
@@ -209,11 +209,14 @@ function M:apply_rewarded_revive()
 end
 
 function M:get_character_info(char_id)
-	return cards_data.characters[char_id] or {
-		name = "Неизвестный",
-		role = "Сотрудник",
-		sprite = "hr_kristina"
-	}
+	return i18n.get_character(char_id)
+end
+
+function M:get_current_card_text()
+	if not self.current_card then
+		return nil
+	end
+	return i18n.get_card_text(self.current_card.id)
 end
 
 return M

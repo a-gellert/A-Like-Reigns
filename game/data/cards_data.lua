@@ -1,10 +1,635 @@
--- Generated game database
 local M = {}
 
-M.characters = { hr_kristina = { name = "HR Кристина", role = "Директор по счастью людей", sprite = "hr_kristina" }, lead_artem = { name = "Тимлид Артем", role = "Главный разработчик (CTO)", sprite = "lead_artem" }, sales_igor = { name = "Сейлз Игорь", role = "Коммерческий директор", sprite = "sales_igor" }, investor_mark = { name = "Инвестор Марк", role = "Представитель фонда", sprite = "investor_mark" }, zavhoz_mikhalych = { name = "Завхоз Михалыч", role = "Бытовой реалист", sprite = "zavhoz_mikhalych" } }
+M.characters = {
+	hr_kristina = { name = "Кристина", sprite = "hr_kristina" },
+	lead_artem = { name = "Артём", sprite = "lead_artem" },
+	sales_igor = { name = "Игорь", sprite = "sales_igor" },
+	investor_mark = { name = "Марк", sprite = "investor_mark" },
+	zavhoz_mikhalych = { name = "Михалыч", sprite = "zavhoz_mikhalych" }
+}
 
-M.deaths = { team = { min = { title = "Бунт на корабле", desc = "Все сеньоры уволились одним днем. В пустом офисе остался только плачущий HR." }, max = { title = "Хиппи-коммуна", desc = "Безлимитные отпуска и лавандовый раф. Работать некому, совет директоров распускает штат." } }, product = { min = { title = "Фатальный сбой", desc = "База данных стерта, бэкапов нет. Проект закрыт технадзором." }, max = { title = "Перфекционизм", desc = "Релиз отложен на 4 года ради «идеального кода». Конкуренты забрали весь рынок." } }, money = { min = { title = "Банкротство", desc = "Нет денег на оплату хостинга и зарплат. В офис пришли судебные приставы." }, max = { title = "Маски-шоу", desc = "Налоговая заподозрила отмывание сверхдоходов. Счета арестованы, вы на допросе." } }, board = { min = { title = "Вотум недоверия", desc = "Совет директоров лишает вас полномочий и блокирует пропуск в здание." }, max = { title = "Золотой парашют", desc = "Корпорация выкупила 100% компании. Вас увольняют с чеком на $1M без права голоса." } } }
+M.deaths = {
+	team = {
+		min = { title = "Массовый уход", desc = "Ведущие специалисты уволились. Некому писать код и поддерживать клиентов." },
+		max = { title = "Полная анархия", desc = "Бесконечные отпуска и полное отсутствие дедлайнов. Компания перестала производить что-либо." }
+	},
+	product = {
+		min = { title = "Крах сервиса", desc = "База данных повреждена, архитектура развалилась. Клиенты массово аннулируют подписки." },
+		max = { title = "Технический тупик", desc = "Годы ушли на бесконечные рефакторинги и идеальный код. Рынок заняли быстрые конкуренты." }
+	},
+	money = {
+		min = { title = "Банкротство", desc = "Казна пуста, счета за облачные серверы и зарплаты не оплачены. Офис опечатан." },
+		max = { title = "Налоговое расследование", desc = "Аномальная прибыль привлекла финансовый надзор. Счета заблокированы до окончания аудита." }
+	},
+	board = {
+		min = { title = "Вотум недоверия", desc = "Совет директоров единогласно проголосовал за вашу немедленную отставку." },
+		max = { title = "Поглощение гигантом", desc = "Корпорация выкупила компанию целиком. Совет директоров назначил своего топ-менеджера." }
+	}
+}
 
-M.cards = { { id = "tut_01", character = "hr_kristina", text = "Добро пожаловать в кресло CEO! Проверим пульс: готовы резать косты и увольнять бездельников?", left_choice = { text = "Я буду добрым боссом", effects = { team = 15, product = 0, money = -10, board = -10 }, next_card_id = "tut_02" }, right_choice = { text = "Бизнес есть бизнес", effects = { team = -10, product = 5, money = 10, board = 15 }, next_card_id = "tut_02" }, weight = 100 }, { id = "tut_02", character = "lead_artem", text = "Сверху видны 4 ресурса: Команда, Продукт, Казна и Совет. Упадет до нуля или пробьет 100 — снимут!", left_choice = { text = "Понял, держим баланс", effects = { team = 5, product = 5, money = -5, board = 0 }, next_card_id = "tut_03" }, right_choice = { text = "Риск — дело благородное!", effects = { team = -5, product = 10, money = 10, board = -5 }, next_card_id = "tut_03" }, weight = 100 }, { id = "tut_03", character = "investor_mark", text = "Точки над иконками подсказывают силу влияния ответа. Покажем взрывной рост капитализации?", left_choice = { text = "Осторожный рост", effects = { team = 5, product = 5, money = 0, board = -5 } }, right_choice = { text = "To the Moon! Взлетаем!", effects = { team = -10, product = -5, money = 15, board = 20 } }, weight = 100 }, { id = "quest_ai_01", character = "investor_mark", text = "Рынку нужен AI! Срочно добавьте генерацию котиков в наше бухгалтерское приложение!", left_choice = { text = "Это бред, не будем", effects = { team = 5, product = 10, money = 0, board = -20 }, next_card_id = "quest_ai_fail_fund" }, right_choice = { text = "Прикрутить котиков!", effects = { team = -15, product = -10, money = -15, board = 25 }, next_card_id = "quest_ai_02" }, weight = 20 }, { id = "quest_ai_fail_fund", character = "investor_mark", text = "Без AI наш стартап выглядит как динозавр. Мы срезаем следующий транш финансирования!", left_choice = { text = "Затянем пояса", effects = { team = -10, product = 5, money = -20, board = 5 } }, right_choice = { text = "Ищите других CEO", effects = { team = 10, product = 0, money = -10, board = -25 } }, weight = 0 }, { id = "quest_ai_02", character = "lead_artem", text = "Из-за ваших котиков упала база транзакций. Чинить срочно ночью или подождем утра?", left_choice = { text = "Ночной кранч!", effects = { team = -25, product = 20, money = -5, board = 0 }, next_card_id = "quest_ai_03" }, right_choice = { text = "Утро вечера мудренее", effects = { team = 10, product = -30, money = -20, board = -15 }, next_card_id = "quest_ai_03" }, weight = 0 }, { id = "quest_ai_03", character = "sales_igor", text = "Клиенты в восторге от AI-котиков! Но токены OpenAI сожрали месячный бюджет за пару дней.", left_choice = { text = "Ввести платную подписку", effects = { team = 0, product = -5, money = 25, board = 10 }, next_card_id = "quest_ai_04" }, right_choice = { text = "Оплатить из резервов", effects = { team = 5, product = 5, money = -25, board = -10 }, next_card_id = "quest_ai_04" }, weight = 0 }, { id = "quest_ai_04", character = "hr_kristina", text = "Нейросеть случайно отправила отчет с нецензурной лексикой в общий чат вип-клиентов!", left_choice = { text = "Сказать, что это фича", effects = { team = 10, product = -15, money = -10, board = -15 }, next_card_id = "quest_ai_05" }, right_choice = { text = "Извиниться и дать скидку", effects = { team = -5, product = 10, money = -15, board = 10 }, next_card_id = "quest_ai_05" }, weight = 0 }, { id = "quest_ai_05", character = "investor_mark", text = "Мы стали вирусными! Фонд предлагает оформить патент на когнитивных котиков.", left_choice = { text = "Запатентовать технологию", effects = { team = -5, product = 15, money = -15, board = 20 } }, right_choice = { text = "Открыть исходный код", effects = { team = 15, product = 10, money = 0, board = -15 } }, weight = 0 }, { id = "quest_refactor_01", character = "lead_artem", text = "Архитектура дышит на ладан. Нужен полный рефакторинг на месяц, иначе мы утонем в багах.", left_choice = { text = "Пилим рефакторинг!", effects = { team = 20, product = 25, money = -20, board = -20 }, next_card_id = "quest_refactor_02" }, right_choice = { text = "Бизнес важнее: пили фичи", effects = { team = -20, product = -20, money = 15, board = 15 }, next_card_id = "quest_refactor_features" }, weight = 20 }, { id = "quest_refactor_features", character = "sales_igor", text = "Фичи выкатили вовремя, но каждая третья кнопка вызывает синий экран у пользователей.", left_choice = { text = "Срочно выкатить хотфикс", effects = { team = -15, product = 15, money = -10, board = 5 } }, right_choice = { text = "Заглушить негатив рекламой", effects = { team = -5, product = -15, money = -15, board = 15 } }, weight = 0 }, { id = "quest_refactor_02", character = "sales_igor", text = "Уже две недели нет релизов фич! Клиенты грозят уйти к конкурентам прямо сейчас.", left_choice = { text = "Показать им демо бэкенда", effects = { team = 5, product = 0, money = -15, board = -10 }, next_card_id = "quest_refactor_03" }, right_choice = { text = "Пообещать скидку 50%", effects = { team = 0, product = 5, money = -20, board = 10 }, next_card_id = "quest_refactor_03" }, weight = 0 }, { id = "quest_refactor_03", character = "lead_artem", text = "Мы переписали ядро на модный язык Rust! Правда, компиляция идет 4 часа, а джуны плачут.", left_choice = { text = "Нанять сеньоров-растовиков", effects = { team = -10, product = 20, money = -25, board = 10 }, next_card_id = "quest_refactor_04" }, right_choice = { text = "Обучить текущих джунов", effects = { team = 15, product = -10, money = -10, board = -5 }, next_card_id = "quest_refactor_04" }, weight = 0 }, { id = "quest_refactor_04", character = "investor_mark", text = "Слышал, вы переписали ядро! Рынок в восторге, капитализация взлетела! Готовы к раунду B?", left_choice = { text = "Берем инвестиции!", effects = { team = -5, product = 10, money = 30, board = 20 }, next_card_id = "quest_refactor_05" }, right_choice = { text = "Мы самоокупаемы", effects = { team = 15, product = 10, money = 5, board = -20 }, next_card_id = "quest_refactor_05" }, weight = 0 }, { id = "quest_refactor_05", character = "lead_artem", text = "Стабильность системы выросла на порядок. Наконец-то я смогу поспать больше 4 часов.", left_choice = { text = "Заслуженный отдых команде", effects = { team = 20, product = 5, money = -10, board = 0 } }, right_choice = { text = "Теперь начинаем редизайн UI!", effects = { team = -20, product = 10, money = 5, board = 10 } }, weight = 0 }, { id = "quest_party_01", character = "hr_kristina", text = "Команда на грани выгорания. Давайте снимем виллу в Сочи и закажем элитный кейтеринг!", left_choice = { text = "Пицца в офисе и хватит", effects = { team = -15, product = 5, money = 5, board = 5 }, next_card_id = "quest_party_cheap" }, right_choice = { text = "Гуляем по-крупному!", effects = { team = 25, product = -10, money = -25, board = -10 }, next_card_id = "quest_party_02" }, weight = 20 }, { id = "quest_party_cheap", character = "hr_kristina", text = "Сотрудники обиделись на холодную пиццу и устроили тихий саботаж спринта.", left_choice = { text = "Выдать премии конфетами", effects = { team = -15, product = -5, money = 0, board = 0 } }, right_choice = { text = "Дать внеплановый отгул", effects = { team = 15, product = -15, money = -5, board = -10 } }, weight = 0 }, { id = "quest_party_02", character = "zavhoz_mikhalych", text = "На корпоративе тимлид случайно утопил рабочий ноутбук с ключами продакшена в бассейне.", left_choice = { text = "Купить новый топовый Mac", effects = { team = 10, product = 5, money = -20, board = -5 }, next_card_id = "quest_party_03" }, right_choice = { text = "Вычесть из его зарплаты!", effects = { team = -25, product = -10, money = 10, board = 5 }, next_card_id = "quest_party_03" }, weight = 0 }, { id = "quest_party_03", character = "sales_igor", text = "Я спьяну продал VIP-клиенту наш сервис с пожизненной бесплатной поддержкой...", left_choice = { text = "Расторгнуть со скандалом", effects = { team = 5, product = 0, money = 10, board = -20 }, next_card_id = "quest_party_04" }, right_choice = { text = "Придется терпеть", effects = { team = -10, product = -15, money = -15, board = 10 }, next_card_id = "quest_party_04" }, weight = 0 }, { id = "quest_party_04", character = "hr_kristina", text = "Фотографии с корпоратива утекли в профильные Telegram-каналы. Мы в трендах мемов!", left_choice = { text = "Использовать для PR и найма", effects = { team = 15, product = 0, money = 10, board = -10 }, next_card_id = "quest_party_05" }, right_choice = { text = "Нанять кризисного юриста", effects = { team = -10, product = 0, money = -20, board = 15 }, next_card_id = "quest_party_05" }, weight = 0 }, { id = "quest_party_05", character = "investor_mark", text = "Инвесторы увидели фото с вечеринки. Спрашивают, куда ушли деньги фонда.", left_choice = { text = "Сказать, что тимбилдинг", effects = { team = 10, product = 0, money = 0, board = -15 } }, right_choice = { text = "Вернуть часть средств", effects = { team = -5, product = 0, money = -20, board = 20 } }, weight = 0 }, { id = "filler_coffee_01", character = "zavhoz_mikhalych", text = "Итальянская кофемашина сгорела. Покупаем новую за 300 тысяч или банку растворимого?", left_choice = { text = "Растворимый сойдет", effects = { team = -20, product = 0, money = 5, board = 0 } }, right_choice = { text = "Бери премиум-аппарат", effects = { team = 15, product = 0, money = -15, board = -5 } }, weight = 10 }, { id = "filler_chair_02", character = "zavhoz_mikhalych", text = "Разработчики жалуются на боль в спине. Требуют ортопедические кресла Herman Miller.", left_choice = { text = "Пусть делают разминку", effects = { team = -15, product = -5, money = 5, board = 0 } }, right_choice = { text = "Закупить кресла всем", effects = { team = 20, product = 5, money = -20, board = -5 } }, weight = 10 }, { id = "filler_flood_03", character = "zavhoz_mikhalych", text = "В серверной прорвало батарею отопления! Горячая вода уже достает до розеток!", left_choice = { text = "Обесточить и сушить феном", effects = { team = -5, product = -25, money = -5, board = 0 } }, right_choice = { text = "Срочная платная аварийка", effects = { team = 5, product = 10, money = -20, board = 5 } }, weight = 10 }, { id = "filler_cat_04", character = "zavhoz_mikhalych", text = "В офис прибился бездомный рыжий кот. Сотрудники уже построили ему замок из коробок.", left_choice = { text = "Выгнать на улицу, аллергии!", effects = { team = -20, product = 5, money = 0, board = 5 } }, right_choice = { text = "Назначить вице-президентом!", effects = { team = 25, product = -5, money = -10, board = -10 } }, weight = 10 }, { id = "filler_server_cost_05", character = "lead_artem", text = "Счет за облака AWS превысил наш месячный доход. Переезжаем на сервер под моим столом?", left_choice = { text = "Сервер под столом — топ", effects = { team = -10, product = -25, money = 25, board = -10 } }, right_choice = { text = "Остаемся в облаке", effects = { team = 5, product = 15, money = -25, board = 10 } }, weight = 10 }, { id = "filler_opensource_06", character = "lead_artem", text = "Хотим выложить нашу внутреннюю утилиту в Open Source. Сообщество поможет доработать.", left_choice = { text = "Нет, это ноу-хау фирмы", effects = { team = -10, product = 5, money = 5, board = 5 } }, right_choice = { text = "Выкладывайте на GitHub", effects = { team = 15, product = -5, money = 0, board = 10 } }, weight = 10 }, { id = "filler_crypto_07", character = "lead_artem", text = "Один из сеньоров майнит монеро на тестовом сервере по ночам. Зато не просит прибавку.", left_choice = { text = "Уволить с позором", effects = { team = -15, product = -5, money = 5, board = 10 } }, right_choice = { text = "Брать 30% комиссии в казну", effects = { team = 10, product = -10, money = 20, board = -15 } }, weight = 10 }, { id = "filler_intern_08", character = "lead_artem", text = "Джуниор закоммитил API-ключи от боевого платежного шлюза в публичный репозиторий.", left_choice = { text = "Пусть сам оплачивает счет", effects = { team = -20, product = 0, money = 10, board = 0 } }, right_choice = { text = "Быстро ротировать ключи", effects = { team = 5, product = 10, money = -15, board = 5 } }, weight = 10 }, { id = "filler_astrology_09", character = "hr_kristina", text = "Я нашла гениального HR-астролога. Он поможет подбирать кандидатов по натальной карте!", left_choice = { text = "Вон с мракобесием!", effects = { team = -10, product = 10, money = 5, board = 10 } }, right_choice = { text = "Попробуем ради веселья", effects = { team = 10, product = -15, money = -10, board = -15 } }, weight = 10 }, { id = "filler_meditation_10", character = "hr_kristina", text = "Давайте введем обязательную тибетскую медитацию вместо утренних стендапов?", left_choice = { text = "На стендапах работают!", effects = { team = -10, product = 15, money = 5, board = 5 } }, right_choice = { text = "Оммм... Вводим!", effects = { team = 20, product = -20, money = -5, board = -10 } }, weight = 10 }, { id = "filler_conflict_11", character = "hr_kristina", text = "Фронтендер и бэкендер подрались из-за формата передачи даты в JSON.", left_choice = { text = "Оштрафовать обоих за драку", effects = { team = -20, product = 5, money = 10, board = 5 } }, right_choice = { text = "Отправить на психотерапию", effects = { team = 15, product = -5, money = -15, board = -5 } }, weight = 10 }, { id = "filler_overtime_12", character = "hr_kristina", text = "Отдел маркетинга просит оплатить им курсы игры на барабанах для снятия стресса.", left_choice = { text = "Денег нет, стучите по столу", effects = { team = -15, product = 0, money = 5, board = 5 } }, right_choice = { text = "Оплатить барабаны", effects = { team = 15, product = 0, money = -15, board = -10 } }, weight = 10 }, { id = "filler_discount_13", character = "sales_igor", text = "Госзаказчик готов купить наш софт, если мы добавим поддержку дискет 3.5 дюйма!", left_choice = { text = "Мы современный стартап", effects = { team = 10, product = 10, money = -20, board = -15 } }, right_choice = { text = "Любой каприз за их деньги!", effects = { team = -15, product = -15, money = 30, board = 15 } }, weight = 10 }, { id = "filler_nepotism_14", character = "sales_igor", text = "Мой шурин ищет работу директора по развитию. Опыта ноль, но подвешен язык!", left_choice = { text = "Кумовство запрещено", effects = { team = 10, product = 5, money = 0, board = -10 } }, right_choice = { text = "Оформить с бонусом", effects = { team = -15, product = -10, money = -20, board = 15 } }, weight = 10 }, { id = "filler_expo_15", character = "sales_igor", text = "Едем на IT-конференцию в Дубай! Нужен стенд с голограммами и золотые визитки.", left_choice = { text = "Слишком дорого, сидим дома", effects = { team = -5, product = 5, money = 15, board = -15 } }, right_choice = { text = "Бронируй Дубай!", effects = { team = 10, product = -5, money = -30, board = 25 } }, weight = 10 }, { id = "filler_competitor_16", character = "sales_igor", text = "Конкурент скопировал дизайн нашего сайта пиксель в пиксель! Подаем иск в суд?", left_choice = { text = "Судиться до копейки", effects = { team = 5, product = 0, money = -20, board = 15 } }, right_choice = { text = "Сделать мем в соцсетях", effects = { team = 15, product = 5, money = -5, board = -10 } }, weight = 10 }, { id = "filler_pivot_17", character = "investor_mark", text = "Крипта растет. Давайте переименуем компанию в Web3 Blockchain Cloud Meta Solutions?", left_choice = { text = "Мы софт для складов...", effects = { team = 10, product = 10, money = -10, board = -20 } }, right_choice = { text = "Переименовываем немедленно!", effects = { team = -15, product = -15, money = 25, board = 25 } }, weight = 10 }, { id = "filler_layoff_18", character = "investor_mark", text = "Увольте 20% штата, чтобы квартальный отчет о прибыли порадовал совет директоров.", left_choice = { text = "Люди — наш главный актив", effects = { team = 25, product = 5, money = -15, board = -25 } }, right_choice = { text = "Готовьте списки под нож", effects = { team = -30, product = -10, money = 25, board = 25 } }, weight = 10 }, { id = "filler_ipo_19", character = "investor_mark", text = "Мы хотим провести быстрое IPO через SPAC уже в следующем месяце. Готовы?", left_choice = { text = "Мы еще не готовы к бирже", effects = { team = 5, product = 10, money = -5, board = -20 } }, right_choice = { text = "Выходим на биржу!", effects = { team = -15, product = -10, money = 35, board = 20 } }, weight = 10 }, { id = "filler_influencer_20", character = "investor_mark", text = "Популярный IT-блогер готов упомянуть наш софт в своем ролике за 50 тысяч долларов.", left_choice = { text = "Сомнительная реклама", effects = { team = 0, product = 5, money = 10, board = -10 } }, right_choice = { text = "Покупаем интеграцию!", effects = { team = 5, product = -5, money = -25, board = 20 } }, weight = 10 }, { id = "filler_audit_21", character = "sales_igor", text = "Налоговый инспектор пьет чай в переговорке. Намекает на платные консультации.", left_choice = { text = "Строго по закону!", effects = { team = 5, product = 0, money = -25, board = 15 } }, right_choice = { text = "Оплатить консультацию...", effects = { team = -10, product = 0, money = -15, board = -15 } }, weight = 10 }, { id = "filler_wifi_22", character = "zavhoz_mikhalych", text = "Соседнее кафе подключилось к офисному Wi-Fi и качает фильмы гигабайтами.", left_choice = { text = "Запаролить и поставить файрвол", effects = { team = 10, product = 15, money = -10, board = 0 } }, right_choice = { text = "Выбить скидку на кофе", effects = { team = 20, product = -10, money = 5, board = -10 } }, weight = 10 }, { id = "filler_remote_23", character = "hr_kristina", text = "Сотрудники просят полную удаленку из теплых стран. В офис ходить никто не хочет.", left_choice = { text = "Все в офис под камеры!", effects = { team = -25, product = 15, money = -5, board = 15 } }, right_choice = { text = "Работайте откуда угодно", effects = { team = 25, product = -15, money = 10, board = -15 } }, weight = 10 }, { id = "filler_hackathon_24", character = "lead_artem", text = "Устроим 48-часовой хакатон на выходных с энергетиками, пиццей и бессонницей?", left_choice = { text = "В выходные надо отдыхать", effects = { team = 15, product = -5, money = 0, board = -5 } }, right_choice = { text = "Кодим 48 часов без сна!", effects = { team = -15, product = 25, money = -10, board = 10 } }, weight = 10 } }
+M.cards = {
+	-- Onboarding & Tutorials
+	{
+		id = "tut_01",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 15, product = 0, money = -10, board = -10 }, next_card_id = "tut_02" },
+		right_choice = { effects = { team = -10, product = 5, money = 10, board = 15 }, next_card_id = "tut_02" },
+		weight = 100
+	},
+	{
+		id = "tut_02",
+		character = "lead_artem",
+		left_choice = { effects = { team = 5, product = 5, money = -5, board = 0 }, next_card_id = "tut_03" },
+		right_choice = { effects = { team = -5, product = 10, money = 10, board = -5 }, next_card_id = "tut_03" },
+		weight = 100
+	},
+	{
+		id = "tut_03",
+		character = "investor_mark",
+		left_choice = { effects = { team = 5, product = 5, money = 0, board = -5 } },
+		right_choice = { effects = { team = -10, product = -5, money = 15, board = 20 } },
+		weight = 100
+	},
+
+	-- Story Arc: Cyber Security & Data Leak
+	{
+		id = "quest_sec_01",
+		character = "lead_artem",
+		left_choice = { effects = { team = -5, product = 5, money = -25, board = -10 }, next_card_id = "quest_sec_02_paid" },
+		right_choice = { effects = { team = -15, product = 15, money = -10, board = 15 }, next_card_id = "quest_sec_02_disclose" },
+		weight = 20
+	},
+	{
+		id = "quest_sec_02_paid",
+		character = "investor_mark",
+		left_choice = { effects = { team = 5, product = 10, money = -25, board = 15 }, next_card_id = "quest_sec_03" },
+		right_choice = { effects = { team = -15, product = -15, money = 5, board = -25 }, next_card_id = "quest_sec_03" },
+		weight = 0
+	},
+	{
+		id = "quest_sec_02_disclose",
+		character = "sales_igor",
+		left_choice = { effects = { team = 5, product = 10, money = -20, board = -5 }, next_card_id = "quest_sec_03" },
+		right_choice = { effects = { team = -10, product = -5, money = 10, board = -15 }, next_card_id = "quest_sec_03" },
+		weight = 0
+	},
+	{
+		id = "quest_sec_03",
+		character = "lead_artem",
+		left_choice = { effects = { team = -15, product = 20, money = -10, board = 10 }, next_card_id = "quest_sec_04" },
+		right_choice = { effects = { team = 15, product = -15, money = 5, board = -10 }, next_card_id = "quest_sec_04" },
+		weight = 0
+	},
+	{
+		id = "quest_sec_04",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 20, product = -15, money = -10, board = -5 } },
+		right_choice = { effects = { team = 10, product = 5, money = -20, board = 5 } },
+		weight = 0
+	},
+
+	-- Story Arc: Enterprise Whale Contract
+	{
+		id = "quest_ent_01",
+		character = "sales_igor",
+		left_choice = { effects = { team = 15, product = 10, money = -15, board = -20 }, next_card_id = "quest_ent_reject" },
+		right_choice = { effects = { team = -15, product = -10, money = 30, board = 25 }, next_card_id = "quest_ent_02" },
+		weight = 20
+	},
+	{
+		id = "quest_ent_reject",
+		character = "investor_mark",
+		left_choice = { effects = { team = 10, product = 15, money = 10, board = -5 } },
+		right_choice = { effects = { team = -15, product = -5, money = 20, board = 10 } },
+		weight = 0
+	},
+	{
+		id = "quest_ent_02",
+		character = "lead_artem",
+		left_choice = { effects = { team = -10, product = 15, money = -20, board = 15 }, next_card_id = "quest_ent_03" },
+		right_choice = { effects = { team = 15, product = 10, money = -10, board = -15 }, next_card_id = "quest_ent_03" },
+		weight = 0
+	},
+	{
+		id = "quest_ent_03",
+		character = "sales_igor",
+		left_choice = { effects = { team = -20, product = 20, money = 20, board = 10 }, next_card_id = "quest_ent_04" },
+		right_choice = { effects = { team = 5, product = -10, money = 10, board = -15 }, next_card_id = "quest_ent_04" },
+		weight = 0
+	},
+	{
+		id = "quest_ent_04",
+		character = "investor_mark",
+		left_choice = { effects = { team = -10, product = 15, money = 25, board = 20 } },
+		right_choice = { effects = { team = 15, product = 10, money = 10, board = -5 } },
+		weight = 0
+	},
+
+	-- Story Arc: Headhunting & Retention
+	{
+		id = "quest_hunt_01",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 20, product = 10, money = -25, board = -15 }, next_card_id = "quest_hunt_02" },
+		right_choice = { effects = { team = -20, product = -15, money = 15, board = 5 }, next_card_id = "quest_hunt_loss" },
+		weight = 20
+	},
+	{
+		id = "quest_hunt_loss",
+		character = "lead_artem",
+		left_choice = { effects = { team = -5, product = 20, money = -25, board = -10 } },
+		right_choice = { effects = { team = 15, product = -20, money = -5, board = -15 } },
+		weight = 0
+	},
+	{
+		id = "quest_hunt_02",
+		character = "lead_artem",
+		left_choice = { effects = { team = 25, product = 0, money = -30, board = -20 }, next_card_id = "quest_hunt_03" },
+		right_choice = { effects = { team = -15, product = 5, money = 10, board = 15 }, next_card_id = "quest_hunt_03" },
+		weight = 0
+	},
+	{
+		id = "quest_hunt_03",
+		character = "investor_mark",
+		left_choice = { effects = { team = -15, product = 15, money = 20, board = 15 }, next_card_id = "quest_hunt_04" },
+		right_choice = { effects = { team = 20, product = 5, money = -20, board = -15 }, next_card_id = "quest_hunt_04" },
+		weight = 0
+	},
+	{
+		id = "quest_hunt_04",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 15, product = 10, money = -10, board = 10 } },
+		right_choice = { effects = { team = -10, product = 5, money = 5, board = -10 } },
+		weight = 0
+	},
+
+	-- Story Arc: Peak Traffic & Server Outage
+	{
+		id = "quest_bf_01",
+		character = "lead_artem",
+		left_choice = { effects = { team = 10, product = 20, money = -25, board = -10 }, next_card_id = "quest_bf_02_stable" },
+		right_choice = { effects = { team = -20, product = 10, money = 15, board = 10 }, next_card_id = "quest_bf_02_crash" },
+		weight = 20
+	},
+	{
+		id = "quest_bf_02_crash",
+		character = "sales_igor",
+		left_choice = { effects = { team = -15, product = 15, money = -20, board = -20 }, next_card_id = "quest_bf_03" },
+		right_choice = { effects = { team = -5, product = -25, money = -30, board = -25 }, next_card_id = "quest_bf_03" },
+		weight = 0
+	},
+	{
+		id = "quest_bf_02_stable",
+		character = "sales_igor",
+		left_choice = { effects = { team = 15, product = 20, money = 10, board = -10 }, next_card_id = "quest_bf_03" },
+		right_choice = { effects = { team = -10, product = -5, money = 25, board = 25 }, next_card_id = "quest_bf_03" },
+		weight = 0
+	},
+	{
+		id = "quest_bf_03",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = 5, product = 15, money = -20, board = 5 }, next_card_id = "quest_bf_04" },
+		right_choice = { effects = { team = -10, product = -10, money = 5, board = -5 }, next_card_id = "quest_bf_04" },
+		weight = 0
+	},
+	{
+		id = "quest_bf_04",
+		character = "investor_mark",
+		left_choice = { effects = { team = 10, product = 15, money = -15, board = 10 } },
+		right_choice = { effects = { team = -10, product = 10, money = 15, board = -5 } },
+		weight = 0
+	},
+
+	-- Story Arc: Series A Investment & Board
+	{
+		id = "quest_vc_01",
+		character = "investor_mark",
+		left_choice = { effects = { team = 10, product = 5, money = -15, board = -20 }, next_card_id = "quest_vc_boot" },
+		right_choice = { effects = { team = -5, product = 10, money = 35, board = 25 }, next_card_id = "quest_vc_02" },
+		weight = 20
+	},
+	{
+		id = "quest_vc_boot",
+		character = "sales_igor",
+		left_choice = { effects = { team = 5, product = -10, money = 25, board = 5 } },
+		right_choice = { effects = { team = -15, product = -15, money = 20, board = -10 } },
+		weight = 0
+	},
+	{
+		id = "quest_vc_02",
+		character = "investor_mark",
+		left_choice = { effects = { team = 0, product = -10, money = -30, board = 25 }, next_card_id = "quest_vc_03" },
+		right_choice = { effects = { team = 10, product = 15, money = 10, board = -20 }, next_card_id = "quest_vc_03" },
+		weight = 0
+	},
+	{
+		id = "quest_vc_03",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 15, product = 10, money = -15, board = -15 }, next_card_id = "quest_vc_04" },
+		right_choice = { effects = { team = -20, product = -5, money = 10, board = 20 }, next_card_id = "quest_vc_04" },
+		weight = 0
+	},
+	{
+		id = "quest_vc_04",
+		character = "lead_artem",
+		left_choice = { effects = { team = 15, product = 20, money = -10, board = 5 } },
+		right_choice = { effects = { team = -15, product = 5, money = 5, board = 10 } },
+		weight = 0
+	},
+
+	-- Story Arc: Support Automation vs Human Care
+	{
+		id = "quest_auto_01",
+		character = "lead_artem",
+		left_choice = { effects = { team = 20, product = 5, money = -15, board = -15 }, next_card_id = "quest_auto_human" },
+		right_choice = { effects = { team = -15, product = 10, money = 25, board = 15 }, next_card_id = "quest_auto_02" },
+		weight = 20
+	},
+	{
+		id = "quest_auto_human",
+		character = "sales_igor",
+		left_choice = { effects = { team = 10, product = 5, money = 20, board = 10 } },
+		right_choice = { effects = { team = -10, product = 15, money = -10, board = 5 } },
+		weight = 0
+	},
+	{
+		id = "quest_auto_02",
+		character = "sales_igor",
+		left_choice = { effects = { team = 10, product = 15, money = -15, board = 10 }, next_card_id = "quest_auto_03" },
+		right_choice = { effects = { team = 5, product = 5, money = -5, board = -10 }, next_card_id = "quest_auto_03" },
+		weight = 0
+	},
+	{
+		id = "quest_auto_03",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 25, product = 15, money = -20, board = -10 }, next_card_id = "quest_auto_04" },
+		right_choice = { effects = { team = -30, product = -5, money = 30, board = 20 }, next_card_id = "quest_auto_04" },
+		weight = 0
+	},
+	{
+		id = "quest_auto_04",
+		character = "investor_mark",
+		left_choice = { effects = { team = 15, product = 20, money = -10, board = 5 } },
+		right_choice = { effects = { team = -5, product = 0, money = 25, board = 20 } },
+		weight = 0
+	},
+
+	-- Story Arc: Intellectual Property & Lawsuit
+	{
+		id = "quest_ip_01",
+		character = "sales_igor",
+		left_choice = { effects = { team = 10, product = 5, money = -30, board = -15 }, next_card_id = "quest_ip_fight" },
+		right_choice = { effects = { team = -10, product = -5, money = -15, board = 10 }, next_card_id = "quest_ip_settle" },
+		weight = 20
+	},
+	{
+		id = "quest_ip_fight",
+		character = "lead_artem",
+		left_choice = { effects = { team = -15, product = -20, money = -10, board = 15 }, next_card_id = "quest_ip_03" },
+		right_choice = { effects = { team = 10, product = 5, money = -30, board = -5 }, next_card_id = "quest_ip_03" },
+		weight = 0
+	},
+	{
+		id = "quest_ip_settle",
+		character = "investor_mark",
+		left_choice = { effects = { team = 10, product = 5, money = -5, board = 15 }, next_card_id = "quest_ip_03" },
+		right_choice = { effects = { team = -5, product = 0, money = 10, board = -10 }, next_card_id = "quest_ip_03" },
+		weight = 0
+	},
+	{
+		id = "quest_ip_03",
+		character = "lead_artem",
+		left_choice = { effects = { team = -5, product = 20, money = -20, board = 20 } },
+		right_choice = { effects = { team = 20, product = 15, money = 5, board = -20 } },
+		weight = 0
+	},
+
+	-- Story Arc: Technical Debt & Refactoring
+	{
+		id = "quest_ref_01",
+		character = "lead_artem",
+		left_choice = { effects = { team = 20, product = 25, money = -20, board = -20 }, next_card_id = "quest_ref_02" },
+		right_choice = { effects = { team = -20, product = -20, money = 20, board = 15 }, next_card_id = "quest_ref_debt" },
+		weight = 20
+	},
+	{
+		id = "quest_ref_debt",
+		character = "sales_igor",
+		left_choice = { effects = { team = -15, product = 20, money = -10, board = 5 } },
+		right_choice = { effects = { team = -5, product = -15, money = -20, board = 10 } },
+		weight = 0
+	},
+	{
+		id = "quest_ref_02",
+		character = "sales_igor",
+		left_choice = { effects = { team = 5, product = 15, money = -10, board = 10 }, next_card_id = "quest_ref_03" },
+		right_choice = { effects = { team = 15, product = 20, money = -15, board = -15 }, next_card_id = "quest_ref_03" },
+		weight = 0
+	},
+	{
+		id = "quest_ref_03",
+		character = "lead_artem",
+		left_choice = { effects = { team = 15, product = 20, money = -10, board = 10 }, next_card_id = "quest_ref_04" },
+		right_choice = { effects = { team = -5, product = 10, money = 10, board = 5 }, next_card_id = "quest_ref_04" },
+		weight = 0
+	},
+	{
+		id = "quest_ref_04",
+		character = "investor_mark",
+		left_choice = { effects = { team = -10, product = 15, money = 20, board = 20 } },
+		right_choice = { effects = { team = 15, product = 10, money = 10, board = 5 } },
+		weight = 0
+	},
+
+	-- Story Arc: Office Space vs Remote Transition
+	{
+		id = "quest_off_01",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 20, product = -10, money = 20, board = -15 }, next_card_id = "quest_off_remote" },
+		right_choice = { effects = { team = -10, product = 15, money = -25, board = 15 }, next_card_id = "quest_off_hub" },
+		weight = 20
+	},
+	{
+		id = "quest_off_remote",
+		character = "lead_artem",
+		left_choice = { effects = { team = -10, product = 15, money = 0, board = 10 }, next_card_id = "quest_off_03" },
+		right_choice = { effects = { team = 15, product = 10, money = -5, board = -5 }, next_card_id = "quest_off_03" },
+		weight = 0
+	},
+	{
+		id = "quest_off_hub",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = -5, product = 0, money = 15, board = 10 }, next_card_id = "quest_off_03" },
+		right_choice = { effects = { team = 10, product = 5, money = -15, board = -10 }, next_card_id = "quest_off_03" },
+		weight = 0
+	},
+	{
+		id = "quest_off_03",
+		character = "investor_mark",
+		left_choice = { effects = { team = 15, product = 10, money = 5, board = 10 } },
+		right_choice = { effects = { team = -20, product = 15, money = -10, board = 20 } },
+		weight = 0
+	},
+
+	-- Standalone Authentic Dilemmas (Fillers)
+	{
+		id = "filler_01",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = 15, product = -10, money = 5, board = -5 } },
+		right_choice = { effects = { team = -5, product = 5, money = -15, board = 5 } },
+		weight = 10
+	},
+	{
+		id = "filler_02",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = -15, product = -5, money = 5, board = 5 } },
+		right_choice = { effects = { team = 20, product = 5, money = -20, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_03",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = -15, product = 0, money = 10, board = 5 } },
+		right_choice = { effects = { team = 10, product = 0, money = -15, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_04",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = 5, product = 0, money = -10, board = -10 } },
+		right_choice = { effects = { team = -5, product = 0, money = 20, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_05",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = -20, product = -15, money = 10, board = 5 } },
+		right_choice = { effects = { team = 20, product = 20, money = -25, board = -10 } },
+		weight = 10
+	},
+	{
+		id = "filler_06",
+		character = "lead_artem",
+		left_choice = { effects = { team = -15, product = -15, money = 20, board = -10 } },
+		right_choice = { effects = { team = 5, product = 15, money = -20, board = 10 } },
+		weight = 10
+	},
+	{
+		id = "filler_07",
+		character = "lead_artem",
+		left_choice = { effects = { team = -15, product = 20, money = -15, board = 5 } },
+		right_choice = { effects = { team = 5, product = -15, money = 5, board = -10 } },
+		weight = 10
+	},
+	{
+		id = "filler_08",
+		character = "lead_artem",
+		left_choice = { effects = { team = -10, product = 15, money = 0, board = 10 } },
+		right_choice = { effects = { team = 15, product = -5, money = -5, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_09",
+		character = "lead_artem",
+		left_choice = { effects = { team = 20, product = 10, money = -15, board = -10 } },
+		right_choice = { effects = { team = -20, product = -10, money = 10, board = 10 } },
+		weight = 10
+	},
+	{
+		id = "filler_10",
+		character = "lead_artem",
+		left_choice = { effects = { team = -10, product = 20, money = -10, board = 10 } },
+		right_choice = { effects = { team = 15, product = -15, money = 5, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_11",
+		character = "lead_artem",
+		left_choice = { effects = { team = -10, product = 20, money = -15, board = 10 } },
+		right_choice = { effects = { team = 10, product = -20, money = 5, board = -15 } },
+		weight = 10
+	},
+	{
+		id = "filler_12",
+		character = "lead_artem",
+		left_choice = { effects = { team = -10, product = 25, money = -15, board = 10 } },
+		right_choice = { effects = { team = 10, product = -15, money = 5, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_13",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 25, product = 5, money = -25, board = -20 } },
+		right_choice = { effects = { team = -20, product = -5, money = 15, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_14",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 20, product = 5, money = 5, board = -10 } },
+		right_choice = { effects = { team = -25, product = 10, money = -5, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_15",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 20, product = 5, money = -15, board = -10 } },
+		right_choice = { effects = { team = -10, product = 0, money = 10, board = 5 } },
+		weight = 10
+	},
+	{
+		id = "filler_16",
+		character = "hr_kristina",
+		left_choice = { effects = { team = -10, product = 5, money = 5, board = 5 } },
+		right_choice = { effects = { team = 20, product = -5, money = -20, board = -10 } },
+		weight = 10
+	},
+	{
+		id = "filler_17",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 15, product = 15, money = -10, board = -15 } },
+		right_choice = { effects = { team = -15, product = -10, money = 20, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_18",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 10, product = -10, money = -10, board = 10 } },
+		right_choice = { effects = { team = -10, product = 15, money = -15, board = 5 } },
+		weight = 10
+	},
+	{
+		id = "filler_19",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 15, product = 10, money = -15, board = 5 } },
+		right_choice = { effects = { team = -15, product = 0, money = 5, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_20",
+		character = "sales_igor",
+		left_choice = { effects = { team = 5, product = 5, money = -15, board = -15 } },
+		right_choice = { effects = { team = -15, product = -10, money = 25, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_21",
+		character = "sales_igor",
+		left_choice = { effects = { team = 0, product = 0, money = 10, board = -10 } },
+		right_choice = { effects = { team = 10, product = -5, money = -25, board = 20 } },
+		weight = 10
+	},
+	{
+		id = "filler_22",
+		character = "sales_igor",
+		left_choice = { effects = { team = 5, product = 10, money = -15, board = -10 } },
+		right_choice = { effects = { team = -10, product = -10, money = 15, board = 10 } },
+		weight = 10
+	},
+	{
+		id = "filler_23",
+		character = "sales_igor",
+		left_choice = { effects = { team = 0, product = 0, money = 10, board = -10 } },
+		right_choice = { effects = { team = -5, product = 5, money = -15, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_24",
+		character = "sales_igor",
+		left_choice = { effects = { team = 5, product = 5, money = -20, board = 15 } },
+		right_choice = { effects = { team = -5, product = -5, money = 10, board = -15 } },
+		weight = 10
+	},
+	{
+		id = "filler_25",
+		character = "sales_igor",
+		left_choice = { effects = { team = -10, product = 15, money = -20, board = 20 } },
+		right_choice = { effects = { team = 10, product = 5, money = 10, board = -15 } },
+		weight = 10
+	},
+	{
+		id = "filler_26",
+		character = "sales_igor",
+		left_choice = { effects = { team = 15, product = 10, money = -15, board = -15 } },
+		right_choice = { effects = { team = -15, product = -10, money = 25, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_27",
+		character = "investor_mark",
+		left_choice = { effects = { team = 15, product = 20, money = -20, board = -20 } },
+		right_choice = { effects = { team = -10, product = -15, money = 25, board = 25 } },
+		weight = 10
+	},
+	{
+		id = "filler_28",
+		character = "investor_mark",
+		left_choice = { effects = { team = -15, product = -10, money = 20, board = 20 } },
+		right_choice = { effects = { team = 15, product = 10, money = -10, board = -15 } },
+		weight = 10
+	},
+	{
+		id = "filler_29",
+		character = "investor_mark",
+		left_choice = { effects = { team = -5, product = 5, money = -10, board = 20 } },
+		right_choice = { effects = { team = 5, product = 0, money = 5, board = -15 } },
+		weight = 10
+	},
+	{
+		id = "filler_30",
+		character = "investor_mark",
+		left_choice = { effects = { team = 15, product = 0, money = 20, board = -20 } },
+		right_choice = { effects = { team = -15, product = 0, money = -25, board = 20 } },
+		weight = 10
+	},
+	{
+		id = "filler_31",
+		character = "investor_mark",
+		left_choice = { effects = { team = 5, product = 0, money = 5, board = -10 } },
+		right_choice = { effects = { team = -10, product = 5, money = -20, board = 20 } },
+		weight = 10
+	},
+	{
+		id = "filler_32",
+		character = "investor_mark",
+		left_choice = { effects = { team = 25, product = 0, money = -10, board = -15 } },
+		right_choice = { effects = { team = -20, product = 0, money = 10, board = 15 } },
+		weight = 10
+	},
+	{
+		id = "filler_33",
+		character = "investor_mark",
+		left_choice = { effects = { team = 5, product = 5, money = -10, board = 15 } },
+		right_choice = { effects = { team = -5, product = 0, money = 5, board = -15 } },
+		weight = 10
+	},
+	{
+		id = "filler_34",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = -10, product = 15, money = -10, board = 10 } },
+		right_choice = { effects = { team = 10, product = -10, money = 0, board = -10 } },
+		weight = 10
+	},
+	{
+		id = "filler_35",
+		character = "zavhoz_mikhalych",
+		left_choice = { effects = { team = 5, product = 15, money = -15, board = 5 } },
+		right_choice = { effects = { team = -10, product = -15, money = 5, board = -10 } },
+		weight = 10
+	},
+	{
+		id = "filler_36",
+		character = "lead_artem",
+		left_choice = { effects = { team = 15, product = 20, money = -15, board = 10 } },
+		right_choice = { effects = { team = -5, product = -10, money = 5, board = -5 } },
+		weight = 10
+	},
+	{
+		id = "filler_37",
+		character = "hr_kristina",
+		left_choice = { effects = { team = 20, product = 10, money = -20, board = 5 } },
+		right_choice = { effects = { team = -15, product = -5, money = 10, board = -5 } },
+		weight = 10
+	}
+}
 
 return M

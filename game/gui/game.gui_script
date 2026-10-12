@@ -1,5 +1,6 @@
 local deck_engine = require("game.scripts.deck_engine")
 local ads_bridge = require("game.scripts.ads_bridge")
+local i18n = require("game.data.i18n")
 
 local HASH_TOUCH = hash("touch")
 local HASH_LEFT = hash("left")
@@ -29,12 +30,14 @@ function init(self)
 	self.nodes = {
 		root = gui.get_node("root"),
 		quarter_label = gui.get_node("quarter_label"),
+		btn_lang = gui.get_node("btn_lang"),
+		btn_lang_label = gui.get_node("btn_lang_label"),
+
 		card_container = gui.get_node("card_container"),
 		card = gui.get_node("card"),
 		card_shadow = gui.get_node("card_shadow"),
 		card_portrait = gui.get_node("card_portrait"),
 		card_char_name = gui.get_node("card_char_name"),
-		card_char_role = gui.get_node("card_char_role"),
 		card_text = gui.get_node("card_text"),
 
 		choice_overlay_left = gui.get_node("choice_overlay_left"),
@@ -46,6 +49,7 @@ function init(self)
 		btn_left_label = gui.get_node("btn_left_label"),
 		btn_right = gui.get_node("btn_right"),
 		btn_right_label = gui.get_node("btn_right_label"),
+		footer_hint = gui.get_node("footer_hint"),
 
 		game_over_panel = gui.get_node("game_over_panel"),
 		go_header = gui.get_node("go_header"),
@@ -53,28 +57,30 @@ function init(self)
 		go_desc = gui.get_node("go_desc"),
 		go_score = gui.get_node("go_score"),
 		btn_revive = gui.get_node("btn_revive"),
+		btn_revive_text = gui.get_node("btn_revive_text"),
 		btn_restart = gui.get_node("btn_restart"),
+		btn_restart_text = gui.get_node("btn_restart_text"),
 
 		stats = {
 			team = {
 				val = gui.get_node("stat_team_val"),
 				fill = gui.get_node("stat_team_bar_fill"),
-				dot = gui.get_node("stat_team_dot")
+				preview = gui.get_node("stat_team_bar_preview")
 			},
 			product = {
 				val = gui.get_node("stat_product_val"),
 				fill = gui.get_node("stat_product_bar_fill"),
-				dot = gui.get_node("stat_product_dot")
+				preview = gui.get_node("stat_product_bar_preview")
 			},
 			money = {
 				val = gui.get_node("stat_money_val"),
 				fill = gui.get_node("stat_money_bar_fill"),
-				dot = gui.get_node("stat_money_dot")
+				preview = gui.get_node("stat_money_bar_preview")
 			},
 			board = {
 				val = gui.get_node("stat_board_val"),
 				fill = gui.get_node("stat_board_bar_fill"),
-				dot = gui.get_node("stat_board_dot")
+				preview = gui.get_node("stat_board_bar_preview")
 			}
 		}
 	}
@@ -92,8 +98,12 @@ function update_ui_state(self)
 		return
 	end
 
-	-- 1. Quarters
-	gui.set_text(self.nodes.quarter_label, "Квартал " .. tostring(self.engine.quarters + 1))
+	local cur_loc = i18n.get_current_locale()
+
+	-- 1. Language Button & Quarters Label & Footer
+	gui.set_text(self.nodes.btn_lang_label, cur_loc.short_name or string.upper(i18n.get_language()))
+	gui.set_text(self.nodes.quarter_label, i18n.t("quarter", self.engine.quarters + 1))
+	gui.set_text(self.nodes.footer_hint, i18n.t("footer_hint"))
 
 	-- 2. Stats & Progress bars
 	for stat_name, node_group in pairs(self.nodes.stats) do
@@ -111,22 +121,22 @@ function update_ui_state(self)
 		end
 	end
 
-	-- 3. Character Info & Portrait
+	-- 3. Character Info & Portrait (Name only, without role)
 	local char_info = self.engine:get_character_info(card.character)
 	gui.set_text(self.nodes.card_char_name, char_info.name)
-	gui.set_text(self.nodes.card_char_role, char_info.role)
 	gui.play_flipbook(self.nodes.card_portrait, char_info.sprite)
 
-	-- 4. Dialogue Text
-	gui.set_text(self.nodes.card_text, card.text)
+	-- 4. Dialogue Text & Localized Choices
+	local card_text_data = i18n.get_card_text(card.id)
+	gui.set_text(self.nodes.card_text, card_text_data.text)
 
 	-- 5. Choices Previews
-	gui.set_text(self.nodes.choice_text_left, card.left_choice.text)
-	gui.set_text(self.nodes.choice_text_right, card.right_choice.text)
+	gui.set_text(self.nodes.choice_text_left, card_text_data.left)
+	gui.set_text(self.nodes.choice_text_right, card_text_data.right)
 
 	-- 6. Buttons Labels
-	gui.set_text(self.nodes.btn_left_label, card.left_choice.text)
-	gui.set_text(self.nodes.btn_right_label, card.right_choice.text)
+	gui.set_text(self.nodes.btn_left_label, card_text_data.left)
+	gui.set_text(self.nodes.btn_right_label, card_text_data.right)
 
 	-- Reset Card Transform
 	gui.set_position(self.nodes.card_container, self.card_base_pos)
@@ -134,40 +144,57 @@ function update_ui_state(self)
 	gui.set_color(self.nodes.choice_overlay_left, vmath.vector4(0.85, 0.25, 0.25, 0.0))
 	gui.set_color(self.nodes.choice_overlay_right, vmath.vector4(0.20, 0.70, 0.35, 0.0))
 
-	hide_telegraph_dots(self)
+	hide_telegraph_preview(self)
 end
 
-function hide_telegraph_dots(self)
-	for _, node_group in pairs(self.nodes.stats) do
-		gui.set_color(node_group.dot, vmath.vector4(0.98, 0.85, 0.20, 0.0))
+function hide_telegraph_preview(self)
+	for stat_name, node_group in pairs(self.nodes.stats) do
+		gui.set_size(node_group.preview, vmath.vector3(0, 8, 0))
+		-- Restore fill to current stat value
+		local val = math.max(0, math.min(100, self.engine.stats[stat_name] or 50))
+		local fill_width = math.max(2, math.floor(74 * (val / 100)))
+		gui.set_size(node_group.fill, vmath.vector3(fill_width, 8, 0))
 	end
 end
 
 function update_telegraphing(self, dx)
 	local card = self.engine.current_card
 	if not card or math.abs(dx) < 15 then
-		hide_telegraph_dots(self)
+		hide_telegraph_preview(self)
 		return
 	end
 
 	local choice = (dx < 0) and card.left_choice or card.right_choice
 	if not choice or not choice.effects then
-		hide_telegraph_dots(self)
+		hide_telegraph_preview(self)
 		return
 	end
 
-	for stat_name, delta in pairs(choice.effects) do
-		local node_group = self.nodes.stats[stat_name]
-		if node_group and delta ~= 0 then
-			local abs_delta = math.abs(delta)
-			-- Small dot for 1..10, Large dot for > 10
-			local dot_size = (abs_delta > 10) and 18 or 10
-			gui.set_size(node_group.dot, vmath.vector3(dot_size, dot_size, 0))
-			-- Alpha ramps up with swipe progress
-			local alpha = math.min(1.0, math.abs(dx) / 80.0)
-			gui.set_color(node_group.dot, vmath.vector4(0.98, 0.85, 0.20, alpha))
-		elseif node_group then
-			gui.set_color(node_group.dot, vmath.vector4(0.98, 0.85, 0.20, 0.0))
+	local progress = math.min(1.0, math.abs(dx) / 80.0)
+
+	for stat_name, node_group in pairs(self.nodes.stats) do
+		local delta = choice.effects[stat_name]
+		if delta and delta ~= 0 then
+			local current_val = math.max(0, math.min(100, self.engine.stats[stat_name] or 50))
+			local new_val = math.max(0, math.min(100, current_val + delta))
+			local current_px = math.max(2, math.floor(74 * (current_val / 100)))
+			local new_px = math.max(2, math.floor(74 * (new_val / 100)))
+
+			if delta < 0 then
+				-- Decrease: red preview at current width, shrink fill to reveal it
+				gui.set_size(node_group.preview, vmath.vector3(current_px, 8, 0))
+				gui.set_color(node_group.preview, vmath.vector4(0.95, 0.30, 0.30, 1.0))
+				local lerped = current_px + (new_px - current_px) * progress
+				gui.set_size(node_group.fill, vmath.vector3(math.max(2, lerped), 8, 0))
+			else
+				-- Increase: green preview extends beyond fill
+				local lerped = current_px + (new_px - current_px) * progress
+				gui.set_size(node_group.preview, vmath.vector3(math.max(2, lerped), 8, 0))
+				gui.set_color(node_group.preview, vmath.vector4(0.20, 0.80, 0.35, 1.0))
+				gui.set_size(node_group.fill, vmath.vector3(current_px, 8, 0))
+			end
+		else
+			gui.set_size(node_group.preview, vmath.vector3(0, 8, 0))
 		end
 	end
 end
@@ -178,16 +205,24 @@ function show_game_over(self)
 	gui.set_color(self.nodes.game_over_panel, vmath.vector4(0.03, 0.04, 0.07, 0.0))
 	gui.animate(self.nodes.game_over_panel, gui.PROP_COLOR, vmath.vector4(0.03, 0.04, 0.07, 0.95), gui.EASING_OUTQUAD, 0.35)
 
+	gui.set_text(self.nodes.go_header, i18n.t("game_over_header"))
+
 	local death = self.engine.death_info
-	if death then
-		gui.set_text(self.nodes.go_reason_title, death.title)
-		gui.set_text(self.nodes.go_desc, death.desc)
+	if death and death.stat and death.type then
+		local death_info = i18n.get_death(death.stat, death.type)
+		gui.set_text(self.nodes.go_reason_title, death_info.title)
+		gui.set_text(self.nodes.go_desc, death_info.desc)
+	elseif death then
+		gui.set_text(self.nodes.go_reason_title, death.title or i18n.t("game_over_default_title"))
+		gui.set_text(self.nodes.go_desc, death.desc or i18n.t("game_over_default_desc"))
 	else
-		gui.set_text(self.nodes.go_reason_title, "Увольнение")
-		gui.set_text(self.nodes.go_desc, "Совет директоров нашел вам замену.")
+		gui.set_text(self.nodes.go_reason_title, i18n.t("game_over_default_title"))
+		gui.set_text(self.nodes.go_desc, i18n.t("game_over_default_desc"))
 	end
 
-	gui.set_text(self.nodes.go_score, "Вы продержались: " .. tostring(self.engine.quarters) .. " Кварталов")
+	gui.set_text(self.nodes.go_score, i18n.t("game_over_score", self.engine.quarters))
+	gui.set_text(self.nodes.btn_revive_text, i18n.t("btn_revive"))
+	gui.set_text(self.nodes.btn_restart_text, i18n.t("btn_restart"))
 
 	-- If rewarded ad was already used in this run, disable revive button
 	if self.engine.ad_rewarded_used then
@@ -203,7 +238,7 @@ function commit_choice(self, direction)
 	end
 
 	self.is_animating = true
-	hide_telegraph_dots(self)
+	hide_telegraph_preview(self)
 
 	-- Fly out animation
 	local target_x = (direction == "left") and -520 or 520
@@ -232,7 +267,7 @@ end
 
 function return_card_to_center(self)
 	self.is_animating = true
-	hide_telegraph_dots(self)
+	hide_telegraph_preview(self)
 	gui.animate(self.nodes.choice_overlay_left, gui.PROP_COLOR, vmath.vector4(0.85, 0.25, 0.25, 0.0), gui.EASING_OUTQUAD, 0.18)
 	gui.animate(self.nodes.choice_overlay_right, gui.PROP_COLOR, vmath.vector4(0.20, 0.70, 0.35, 0.0), gui.EASING_OUTQUAD, 0.18)
 	gui.animate(self.nodes.card_container, gui.PROP_ROTATION, vmath.vector3(0, 0, 0), gui.EASING_OUTQUAD, 0.22)
@@ -242,6 +277,23 @@ function return_card_to_center(self)
 end
 
 function on_input(self, action_id, action)
+	-- Start gameplay on the first player interaction
+	if action.pressed and not self.engine.is_game_over then
+		ads_bridge.gameplay_start()
+	end
+
+	-- Language Switcher interaction
+	if action_id == HASH_TOUCH and action.pressed and not self.is_animating then
+		if gui.pick_node(self.nodes.btn_lang, action.x, action.y) then
+			i18n.cycle_language()
+			update_ui_state(self)
+			if self.engine.is_game_over then
+				show_game_over(self)
+			end
+			return true
+		end
+	end
+
 	-- 1. Game Over screen interactions
 	if self.engine.is_game_over then
 		if action_id == HASH_TOUCH and action.pressed then
@@ -256,7 +308,7 @@ function on_input(self, action_id, action)
 				end)
 				return true
 			elseif gui.pick_node(self.nodes.btn_restart, action.x, action.y) then
-				-- Check interstitial ad on restart (e.g. every 2-3 runs as per GDD)
+				-- Interstitial ad on restart
 				if (self.engine.total_runs % 2) == 0 then
 					ads_bridge.commercial_break(function()
 						self.engine:reset()
